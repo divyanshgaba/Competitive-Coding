@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1488697913 source:c:\users\divyansh\desktop\college experiements\codechef\monk and prisoner of azkaban\main.cpp
+	<iostream>
+	<algorithm>
+	<stack>
+

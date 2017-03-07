@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1487261602 source:c:\users\divyansh\desktop\college experiements\codechef\ski course design\main.cpp
+	<iostream>
+	<fstream>
+	<algorithm>
+	<cmath>
+	<vector>
+

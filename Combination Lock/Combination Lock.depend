@@ -1,0 +1,11 @@
+# depslib dependency file v1.0
+1486646649 source:c:\users\divyansh\desktop\college experiements\codechef\combination lock\main.cpp
+	<iostream>
+	<stdbool.h>
+	<fstream>
+	<algorithm>
+	<string.h>
+	<stdlib.h>
+	<set>
+	<vector>
+
