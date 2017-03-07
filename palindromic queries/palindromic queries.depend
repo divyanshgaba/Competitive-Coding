@@ -1,7 +1,0 @@
-# depslib dependency file v1.0
-1486665389 source:c:\users\divyansh\desktop\college experiements\codechef\palindromic queries\main.cpp
-	<iostream>
-	<vector>
-	<stdbool.h>
-	<algorithm>
-

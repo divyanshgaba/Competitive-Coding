@@ -1,8 +1,0 @@
-# depslib dependency file v1.0
-1486635065 source:c:\users\divyansh\desktop\college experiements\codechef\prime cryptarithm\main.cpp
-	<iostream>
-	<vector>
-	<string>
-	<string.h>
-	<cstdio>
-

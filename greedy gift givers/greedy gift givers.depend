@@ -1,7 +1,0 @@
-# depslib dependency file v1.0
-1485605093 source:c:\users\divyansh\desktop\college experiements\codechef\greedy gift givers\main.cpp
-	<iostream>
-	<fstream>
-	<cstdio>
-	<string.h>
-

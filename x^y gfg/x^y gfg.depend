@@ -1,8 +1,0 @@
-# depslib dependency file v1.0
-1486917923 source:c:\users\divyansh\desktop\college experiements\codechef\x^y gfg\main.cpp
-	<iostream>
-	<vector>
-	<algorithm>
-	<math.h>
-	<stdbool.h>
-

@@ -1,9 +1,0 @@
-# depslib dependency file v1.0
-1486055196 source:c:\users\divyansh\desktop\college experiements\codechef\milking cows\main.cpp
-	<iostream>
-	<stdlib.h>
-	<vector>
-	<fstream>
-	<algorithm>
-	<bits/stdc++.h>
-

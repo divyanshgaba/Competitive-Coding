@@ -1,8 +1,0 @@
-# depslib dependency file v1.0
-1459599710 source:c:\users\divyansh\desktop\ababababa\main.cpp
-	<iostream>
-	<math.h>
-	<string.h>
-	<ctype.h>
-	<cstdio>
-

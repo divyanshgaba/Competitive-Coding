@@ -1,7 +1,0 @@
-# depslib dependency file v1.0
-1487701323 source:c:\users\divyansh\desktop\college experiements\codechef\monk and sorting algorithm\main.cpp
-	<iostream>
-	<cstdlib>
-	<algorithm>
-	<string>
-

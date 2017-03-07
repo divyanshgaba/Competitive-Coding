@@ -1,8 +1,0 @@
-# depslib dependency file v1.0
-1485711876 source:c:\users\divyansh\desktop\college experiements\codechef\broken necklace\main.cpp
-	<iostream>
-	<fstream>
-	<cstdio>
-	<string.h>
-	<assert.h>
-
