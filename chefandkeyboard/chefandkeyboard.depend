@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1476300958 source:c:\users\divyansh\desktop\april\ip 3rd semester\cg\chefandkeyboard\main.c
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+

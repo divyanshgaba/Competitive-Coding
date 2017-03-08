@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1459586383 source:c:\users\divyansh\desktop\fibonacciquerries\main.cpp
+	<iostream>
+	<math.h>
+

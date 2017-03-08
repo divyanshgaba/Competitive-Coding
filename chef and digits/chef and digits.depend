@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1474045156 source:c:\users\divyansh\desktop\april\chef and digits\main.cpp
+	<iostream>
+	<string.h>
+	<vector>
+	<algorithm>
+

@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1477164830 source:c:\users\divyansh\desktop\april\codechef\fullad\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
