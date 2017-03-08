@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1485607915 source:c:\users\divyansh\desktop\college experiements\codechef\friday the thirteen\main.cpp
+	<iostream>
+	<fstream>
+	<cstdio>
+	<string.h>
+	<assert.h>
+

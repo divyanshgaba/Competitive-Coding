@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1486216826 source:c:\users\divyansh\desktop\college experiements\codechef\transformations\main.cpp
+	<iostream>
+	<stdbool.h>
+	<vector>
+	<fstream>
+

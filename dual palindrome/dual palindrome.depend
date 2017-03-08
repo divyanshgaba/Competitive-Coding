@@ -1,0 +1,11 @@
+# depslib dependency file v1.0
+1486495222 source:c:\users\divyansh\desktop\college experiements\codechef\dual palindrome\main.cpp
+	<iostream>
+	<vector>
+	<math.h>
+	<algorithm>
+	<stdlib.h>
+	<cstring>
+	<fstream>
+	<stdbool.h>
+

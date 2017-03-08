@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1487769643 source:c:\users\divyansh\desktop\college experiements\codechef\monk being monitor\main.cpp
+	<iostream>
+	<string.h>
+	<algorithm>
+

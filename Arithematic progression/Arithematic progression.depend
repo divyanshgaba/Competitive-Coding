@@ -1,0 +1,9 @@
+# depslib dependency file v1.0
+1487417383 source:c:\users\divyansh\desktop\college experiements\codechef\arithematic progression\main.cpp
+	<iostream>
+	<vector>
+	<algorithm>
+	<fstream>
+	<cstring>
+	<cmath>
+
