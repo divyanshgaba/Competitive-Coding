@@ -1,16 +1,14 @@
 #include <iostream>
 #include <cstring>
 using namespace std;
-int n;
-string s;
-int solve(int k)
+int n,k;
+int solve(string s,int i,int k)
 {
+
     int temp=1;
     char c=s[0];
     int hold=1;
-    int st=0,en=0;
-    int j;
-    for(j =1;j<n;j++)
+    for(int j =1;j<n;j++)
     {
         if(s[j]==c)
         {
@@ -19,32 +17,23 @@ int solve(int k)
         else
         {
             if(hold<temp)
-            {
                 hold=temp;
-                en = j;
-                st = j-hold;
-            }
             c=s[j];
             temp=1;
-
         }
     }
-    if(hold<temp){
-            en=j;
-    st=j-hold;
-        hold=temp;}
-    //cout<<s<<" "<<hold<<" "<<k<<" "<<st<<" "<<en<<endl;
-    if(k<=0)
-        return hold;
-    for(int l = st;l<=en;l++)
+    if(hold<temp)
+        hold=temp;
+    //cout<<s<<" "<<hold<<endl;
+    if(k!=0&&i!=n)
     {
-        s[l]=(s[l]=='0')?'1':'0';
-        hold = min(hold,solve(k-1));
-        s[l]=(s[l]=='0')?'1':'0';
+        s[i] = s[i]=='0'?'1':'0';
+        hold = min(hold,solve(s,i+1,k-1));
+        s[i] = s[i]=='0'?'1':'0';
+        hold = min(hold,solve(s,i+1,k));
+
     }
     return hold;
-
-
 }
 int main()
 {
@@ -52,12 +41,10 @@ int main()
     cin>>test;
     while(test--)
     {
-        int k;
         cin>>n>>k;
-        if(k>=n)
-            k=n-1;
+        string s;
         cin>>s;
-        cout<<solve(k)<<endl;
+        cout<<solve(s,0,k)<<endl;
     }
     return 0;
 }
