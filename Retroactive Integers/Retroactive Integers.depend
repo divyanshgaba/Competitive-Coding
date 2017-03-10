@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1489166432 source:d:\divyansh\documents\competitive-coding\retroactive integers\main.cpp
+	<iostream>
+	<bits/stdc++.h>
+	<array>
+

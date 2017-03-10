@@ -2,7 +2,8 @@
 #include <cstring>
 using namespace std;
 int n,k;
-int solve(string s,int i,int k)
+string s;
+int solve(int i,int k)
 {
 
     int temp=1;
@@ -28,9 +29,9 @@ int solve(string s,int i,int k)
     if(k!=0&&i!=n)
     {
         s[i] = s[i]=='0'?'1':'0';
-        hold = min(hold,solve(s,i+1,k-1));
+        hold = min(hold,solve(i+1,k-1));
         s[i] = s[i]=='0'?'1':'0';
-        hold = min(hold,solve(s,i+1,k));
+        hold = min(hold,solve(i+1,k));
 
     }
     return hold;
@@ -44,7 +45,7 @@ int main()
         cin>>n>>k;
         string s;
         cin>>s;
-        cout<<solve(s,0,k)<<endl;
+        cout<<solve(0,k)<<endl;
     }
     return 0;
 }
