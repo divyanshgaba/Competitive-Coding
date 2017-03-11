@@ -1,5 +1,6 @@
 #include <iostream>
 #include <array>
+#define MOD 1000000007
 using namespace std;
 int n;
 char c[100001];
@@ -80,18 +81,18 @@ int answer(int i)
             {
                 c[i+1]='b';
                 a[0]--;
-                temp+=answer(i+1);
+                temp=(temp+answer(i+1))%MOD;
                 a[0]++;
             }
             if(a[1]>0)
             {
                 c[i+1]='g';
                 a[1]--;
-                temp+=answer(i+1);
+                temp=(temp+answer(i+1))%MOD;
                 a[1]++;
             }
             c[i+1]='r';
-            temp+=answer(i+1);
+            temp=(temp+answer(i+1))%MOD;
 
             break;
         case 'b':
@@ -99,18 +100,18 @@ int answer(int i)
             {
                 c[i+1]='r';
                 a[2]--;
-                temp+=answer(i+1);
+                temp=(temp+answer(i+1))%MOD;
                 a[2]++;
             }
             if(a[3]>0)
             {
                 c[i+1]='g';
                 a[3]--;
-                temp+=answer(i+1);
+                temp=(temp+answer(i+1))%MOD;
                 a[3]++;
             }
             c[i+1]='b';
-            temp+=answer(i+1);
+            temp=(temp+answer(i+1))%MOD;
 
             break;
         case 'g':
@@ -118,19 +119,19 @@ int answer(int i)
             {
                 c[i+1]='r';
                 a[4]--;
-                temp+=answer(i+1);
+                temp=(temp+answer(i+1))%MOD;
                 a[4]++;
             }
             if(a[5]>0)
             {
                 c[i+1]='b';
                 a[5]--;
-                temp+=answer(i+1);
+                temp=(temp+answer(i+1))%MOD;
                 a[5]++;
             }
             c[i+1]='g';
 
-            temp+=answer(i+1);
+            temp=(temp+answer(i+1))%MOD;
 
             break;
     }
