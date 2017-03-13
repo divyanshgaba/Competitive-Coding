@@ -4,72 +4,39 @@ using namespace std;
 int a[600];
 int mem[600];
 int n;
-/*int answer(vector<int> a,int size)
+int answer(int i,int j)
 {
-    if(size<=1)
-        return size;
-    if(size ==2&&a[0]==a[1]&&a[0]!=0)
-    {
-        return 0;
-    }
-    else if(size ==2&&a[0]!=a[1])
-    {
-        return 2;
-    }
 
+cout<<i<<" "<<j<<endl;
+    if(i>j)
+        return 100000000;
+    if(j==i)
+        return 1;
+    if(j==i+1)
+    {
+        if(a[j]==a[i])
+            return 0;
+    }
+    int temp = 10000000;
+    temp = min(temp,answer(i+1,j)+1);
+    for(int k=i+1;k<=j;k++)
+    {
+        if(a[i]==a[k])
+        {
+            temp = min(temp,answer(i+1,k-1)+answer(k+1,j));
+            break;
+        }
+    }
+    return temp;
 
-}*/
+}
 int main()
 {
     cin>>n;
-    for(int i =1;i<=n;i++)
+    for(int i =0;i<n;i++)
     {
         cin>>a[i];
     }
-    int count=0;
-    for(int j =1;j<=n;j++)
-    {
-        for(int i =1;i<n;i++)
-        {
-            if(a[i]==0)
-                continue;
-            if(a[i]==a[i+1])
-            {
-                a[i]=a[i+1]=0;
-                for(int h=0;h<2;h++)
-                {
-                    for(int k =i+1;k>=1;k--)
-                    {
-                        swap(a[k],a[k-1]);
-                    }
-                }
-                i--;
-            }
-        }
-        for(int i =1;i<n-1;i++)
-        {
-            if(a[i]==0)
-                continue;
-            if(a[i]==a[i+2]&&a[i]!=a[i+1])
-            {
-                a[i+1]=0;
-                for(int k =i+1;k>=1;k--)
-                {
-                    swap(a[k],a[k-1]);
-                }
-                count++;
-                i--;
-            }
-        }
-
-    }
-    for(int i =1;i<=n;i++)
-    {
-        if(a[i]!=0)
-        count++;
-    }
-
-    cout<<count;
-    cout<<endl;
+    cout<<answer(0,n-1);
     return 0;
 }

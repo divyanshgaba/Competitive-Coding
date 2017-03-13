@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1489073702 source:c:\users\divyansh\desktop\college experiements\codechef\mother's milk\main.cpp
+	<iostream>
+	<fstream>
+	<algorithm>
+
