@@ -1,62 +1,67 @@
 #include <iostream>
 #include <algorithm>
 #include <stack>
+#include <array>
+#define MAX 1000010
 using namespace std;
-int next_gr[1000001];
-int next_rev[1000001];
-void nge(pair<int,int> a[],int next_gr[],int n)
+long long forw[MAX];
+long long backw[MAX];
+long long a[MAX];
+long long b[MAX];
+int main()
 {
-    stack<pair<int,int> > st;
-    st.push(a[0]);
-    for(int i =1;i<n;i++)
+    long long n;
+    cin>>n;
+    for(long long i =1;i<=n;i++)
     {
-        if(!st.empty())
+        cin>>a[i];
+        b[n-i+1]=a[i];
+        //cout<<b[n-i+1]<<" ";
+    }
+    stack<pair<long long,long long> > st;
+    st.push(make_pair(a[1],1));
+    for(long long i =2;i<=n;i++)
+    {
+        pair<long long,long long> current = st.top();
+        while(a[i]>current.first)
         {
-            pair<int,int> top = st.top();
-            while(top.first < a[i].first)
-            {
-                next_gr[top.second] =a[i].second;
-                st.pop();
-                if(st.empty())
-                    break;
-                top = st.top();
-            }
-            if(top.first > a[i].first)
-                st.push(a[i]);
+            forw[current.second] = i;
+            st.pop();
+            if(st.empty())
+                break;
+            current = st.top();
         }
-        st.push(a[i]);
+        st.push(make_pair(a[i],i));
     }
     while(!st.empty())
     {
-        pair<int,int> top = st.top();
-        next_gr[top.second] = -1;
+        forw[st.top().second]=-1;
         st.pop();
     }
-
-
-}
-int main()
-{
-    int n;
-    cin>>n;
-    pair<int,int> a[n+1],ar[n+1];
-    for(int i =0;i<n;i++)
+    st.push(make_pair(b[1],1));
+    for(long long i =2;i<=n;i++)
     {
-        cin>>a[i].first;
-        a[i].second =i+1;
-        ar[i] =a[i];
+        pair<long long,long long> current = st.top();
+        while(b[i]>current.first)
+        {
+            backw[current.second] = i;
+            st.pop();
+            if(st.empty())
+                break;
+            current = st.top();
+        }
+        st.push(make_pair(b[i],i));
     }
-    reverse(ar,ar+n);
-    nge(a,next_gr,n);
-    nge(ar,next_rev,n);
-    for(int i =0;i<n;i++)
+    while(!st.empty())
     {
-        //if(next_rev[i] != -1)          next_rev[i]=n-next_rev[i];
+        backw[st.top().second]=-1;
+        st.pop();
     }
-    for(int i =0;i<n;i++)
-    {
-        cout<<next_gr[i]+next_rev[n-1-i]<<endl;
-    }
+    for(long long i =1;i<=n;i++)
+        if(backw[i]!=-1)
+            backw[i]=n-backw[i]+1;
+    for(long long i =1;i<=n;i++)
+        cout<<forw[i]+backw[n-i+1]<<" ";
     cout<<endl;
     return 0;
 }
