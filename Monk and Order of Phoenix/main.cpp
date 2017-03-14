@@ -2,14 +2,18 @@
 #include <vector>
 #include <array>
 #include <list>
+#include <stack>
 #include <algorithm>
 #define MAX 100111
 using namespace std;
-int st[101][MAX];
-int size[101];
+int st[11][MAX];
+int size[11];
+stack<int> aux;
+int n;
 int binary(int i,int low,int high, int key)
 {
     int mid;
+    high--;
     while(low<high)
     {
         mid = (low+high)/2;
@@ -19,13 +23,24 @@ int binary(int i,int low,int high, int key)
             low = mid+1;
     }
     if(st[i][low]>key)
-        return st[i][low];
+        return low;
     return -1;
 }
-
+int ans()
+{
+    int min = aux.top();
+    for(int i =1;i<n;i++)
+    {
+        int ans = binary(i,0,size[i],min);
+        if(ans==-1)
+            return false;
+        else
+            min = st[i][ans];
+    }
+    return true;
+}
 int main()
 {
-    int n;
     cin>>n;
     int min0;
     for(int i =0;i<n;i++)
@@ -36,16 +51,19 @@ int main()
         for(int j=0;j<x;j++)
         {
             cin>>st[i][j];
-            if(i==0)
-            {
-                if(j==0)
-                    min0=st[0][j];
-                else
-                {
-                    if(st[0][j]<min0)
-                        min0=st[0][j];
-                }
-            }
+        }
+    }
+
+    aux.push(st[0][0]);
+    for(int i =1;i<size[0];i++)
+    {
+        if(st[0][i]<aux.top())
+        {
+            aux.push(st[0][i]);
+        }
+        else
+        {
+            aux.push(aux.top());
         }
     }
     int q;
@@ -58,31 +76,32 @@ int main()
         {
             int k,h;
             cin>>k>>h;
-            st[k-1][size[k-1]]=h;
-            if(h<min0)
-                min0=h;
-            size[k-1]++;
+            k--;
+            st[k][size[k]]=h;
+            size[k]++;
+            if(k==0)
+            {
+                if(h<aux.top())
+                {
+                    aux.push(h);
+                }
+                else
+                {
+                    aux.push(aux.top());
+                }
+            }
+
         }
         else if(v==0)
         {
             int k;
             cin>>k;
-            size[k-1]--;
-            if(k==1)
+            k--;
+            size[k]--;
+            if(k==0)
             {
-                if(st[0][size[0]]==min0)
-                {
-                    for(int i =0;i<size[0];i++)
-                    {
-                        if(i==0)
-                            min0=st[0][i];
-                        else
-                        {
-                            if(min0>st[0][i])
-                                min0=st[0][i];
-                        }
-                    }
-                }
+
+                aux.pop();
                 //cout<<"   "<<min0<<endl;
             }
 
@@ -90,37 +109,8 @@ int main()
         }
         else
         {
-            bool val = true;
-            if(size[0]==0)
-            {
-                cout<<"NO"<<endl;
-                continue;
-            }
-            int getmin = min0;
-            //cout<<getmin<<endl;
-            for(int i =1;i<n;i++)
-            {
-                if(size[i]==0||st[i][size[i]-1]<getmin)
-                {
-                    val = false;
-                    //cout<<"hi"<<i<<endl;
-                    break;
-                }
-                else
-                {
-                    int temp = binary(i,0,size[i]-1,getmin);
-                    //cout<<getmin<<endl;
-                    if(temp!=-1)
-                        getmin=temp;
-                    else
-                    {
-                        val=false;
-                        break;
-                    }
 
-                }
-            }
-            if(val)
+            if(ans())
                 cout<<"YES\n";
             else
                 cout<<"NO\n";
