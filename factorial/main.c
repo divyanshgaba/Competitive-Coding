@@ -3,8 +3,7 @@
 
 int main()
 {
-    int test;
-    scanf("%d",&test);
+    int test=1;
     while(test--)
     {
         int array[200000];

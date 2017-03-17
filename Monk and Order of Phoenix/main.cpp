@@ -1,43 +1,69 @@
 #include <iostream>
 #include <vector>
+#include <array>
+#include <list>
+#include <stack>
+#include <algorithm>
+#define MAX 100111
 using namespace std;
-bool master = true;
-int ok[11];
-int nge(vector<int> d,int low,int high,int key)
+int st[11][MAX];
+int size[11];
+stack<int> aux;
+int n;
+int binary(int i,int low,int high, int key)
 {
-    int hold=high;
     int mid;
-    while (low != high)
+    high--;
+    while(low<high)
     {
-        int mid = (low + high) / 2;
-        if (d[mid] <= key)
-        {
-
-            low = mid + 1;
-        }
-        else
-        {
+        mid = (low+high)/2;
+        if(st[i][mid]>key)
             high = mid;
-        }
+        else
+            low = mid+1;
     }
-    if(hold== high)
-        return -1;
-    return high;
+    if(st[i][low]>key)
+        return low;
+    return -1;
+}
+int ans()
+{
+    int min = aux.top();
+    for(int i =1;i<n;i++)
+    {
+        int ans = binary(i,0,size[i],min);
+        if(ans==-1)
+            return false;
+        else
+            min = st[i][ans];
+    }
+    return true;
 }
 int main()
 {
-    int n;
     cin>>n;
-    vector<int> st[n];
-    int sizes[n];
+    int min0;
     for(int i =0;i<n;i++)
     {
-        cin>>sizes[i];
-        for(int j =0;j<sizes[i];j++)
+        int x;
+        cin>>x;
+        size[i]=x;
+        for(int j=0;j<x;j++)
         {
-            int temp;
-            cin>>temp;
-            st[i].push_back(temp);
+            cin>>st[i][j];
+        }
+    }
+
+    aux.push(st[0][0]);
+    for(int i =1;i<size[0];i++)
+    {
+        if(st[0][i]<aux.top())
+        {
+            aux.push(st[0][i]);
+        }
+        else
+        {
+            aux.push(aux.top());
         }
     }
     int q;
@@ -50,71 +76,47 @@ int main()
         {
             int k,h;
             cin>>k>>h;
-            st[k-1].push_back(h);
-            sizes[k-1]++;
-            if(ok[k-1]==1)
+            k--;
+            st[k][size[k]]=h;
+            size[k]++;
+            if(k==0)
             {
-                ok[k-1]=0;
-                master = true;
+                if(h<aux.top())
+                {
+                    aux.push(h);
+                }
+                else
+                {
+                    aux.push(aux.top());
+                }
             }
-            //cout<<"v one "<<st[k-1].back()<<endl;
 
         }
         else if(v==0)
         {
-           int k;
-           cin>>k;
-          // cout<<"v zero "<<st[k-1].back()<<endl;
-           st[k-1].pop_back();
-           sizes[k-1]--;
-           if(sizes[k-1]==0||ok[k-1]==1)
-           {
-               master=false;
-           }
+            int k;
+            cin>>k;
+            k--;
+            size[k]--;
+            if(k==0)
+            {
+
+                aux.pop();
+                //cout<<"   "<<min0<<endl;
+            }
+
 
         }
-        else if(v==2)
+        else
         {
-            bool cond = false;
-            if(master){
-                for(int l = 0;l<sizes[0];l++)
-                {
-                    int key=st[0][l];
-                    if(key>st[1].back())
-                        continue;
-                    for(int h =1;h<n;h++)
-                    {
-                        cond = true;
-                        if(key>st[h].back())
-                        {
-                            cond= false;
-                            break;
-                        }
-                        int skey=nge(st[h],0,sizes[h],key);
-                        if(skey == sizes[h]-1)
-                        {
-                            ok[h]=1;
-                        }
-                        if(skey <0)
-                        {
-                            cond =false;
-                            break;
-                        }
-                        key = st[h][skey];
-                    }
-                    if (cond==true)
-                    {
-                        break;
-                    }
-                }
-            }
+
+            if(ans())
+                cout<<"YES\n";
             else
-                cond =false;
-            if(cond)
-                cout<<"YES"<<endl;
-            else
-                cout<<"NO"<<endl;
+                cout<<"NO\n";
         }
+
     }
+
     return 0;
 }

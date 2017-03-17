@@ -1,101 +1,73 @@
+//trick is that to turn a string of length M, into blocks such that their size is L , we need atmost M/(L+1) + 1 flips
+
 #include <iostream>
 #include <cstring>
 #include <algorithm>
-#include <map>
+#include <vector>
 using namespace std;
-int n,k;
-string s;
-map<pair<string,int>,int> yaad;
-int init;
-int mem[1000002];
-int block()
-{
-    return *max_element(mem,mem+n);
-}
-void flip(int i)
-{
-    int j =i+1;
-    while(j<n&&s[j]==s[i])
-    {
-        mem[j]-=mem[i];
-        j++;
-    }
-    int hold = mem[i];
-    s[i]=s[i]=='0'?'1':'0';
-    if(i!=0&&s[i]==s[i-1])
-    {
-        mem[i]=mem[i-1]+1;
-    }
-    else
-        mem[i]=1;
-    j=i+1;
-    while(j<n&&s[j]==s[i])
-    {
-        mem[j]+=mem[i];
-        j++;
-    }
-}
-int solve(int i,int k)
-{
-
-    if(yaad.count(make_pair(s,k))>0)
-        return yaad[make_pair(s,k)];
-    //cout<<s<<endl;
-    if(k==0||i==n-1)
-    {
-        return block();
-    }
-    int temp;
-    if(k!=0)
-        temp = solve(i+1,k);
-    if(k>0)
-    {
-        flip(i);
-        temp =min(temp,solve(i+1,k-1));
-        flip(i);
-    }
-    if(yaad.count(make_pair(s,k))>0)
-        yaad[make_pair(s,k)]=min(yaad[make_pair(s,k)],temp);
-    else
-        yaad.insert(yaad.begin(),make_pair(make_pair(s,k),temp));
-    return temp;
-
-}
 int main()
 {
     int test;
     cin>>test;
     while(test--)
     {
+        int n,k;
         cin>>n>>k;
-        init = k;
+        string s;
         cin>>s;
-        memset(mem,0,sizeof(mem));
-        mem[0]=1;
-        for(int i =1;i<n;i++)
+        int res = n;
+        vector<int> a;
+        for(int i =0;i<n;i++)
         {
-            if(s[i]==s[i-1])
-                mem[i]=mem[i-1]+1;
+            //each block will be atleast of length 1
+            int count =1;
+            while(i+1<n&&s[i]==s[i+1])
+            {
+                //we have larger block now
+                count++;
+                //we have considered i so
+                i++;
+            }
+            //we store the length of block just considered
+            a.push_back(count);
+        }
+        //binary searching
+
+        int low = 1,high = n;
+        while(low<high)
+        {
+            int mid = (low+high)/2;
+            int need =0;
+
+            if(mid == 1)
+            {
+                int zero =0,one = 0;
+                for(int i =0;i<n;i++)
+                {
+                    if(s[i]=='1')
+                        zero++;
+                    else
+                        one++;
+                    //not a mistake ^^
+                    swap(zero,one);
+                }
+                // string is only in 0101010... or 10101010... if size if we were to make it to size 1, so number of flips need are
+                need = min(zero,one);
+            }
             else
-                mem[i]=1;
-            //cout<<mem[i]<<" ";
+            {
+                //counting number of flips to get maximum block of size to L
+                for(int x:a)
+                    need+=x/(mid+1);
+            }
+            //we counted the number of flips, can we afford that now? if yes, we try to get block lower than that
+            if(need<=k) {high = mid;
+            else low = mid+1; // if no, we find something higher
+
         }
-        int ans=1;
-        if(k>n/2)
-        {
-            ans=1;
-        }
-        else
-        {
-            k=k%n;
-            k=min(k,n/2);
-            ans = solve(0,k);
-        }
-        if(yaad.count(make_pair(s,k))>0)
-            yaad[make_pair(s,k)]=min(ans,yaad[make_pair(s,k)]);
-        else
-            yaad.insert(yaad.begin(),make_pair(make_pair(s,k),ans));
-        cout<<ans<<endl;
+        cout<<res<<endl;
+
+
     }
     return 0;
 }
