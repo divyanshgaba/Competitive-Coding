@@ -8,14 +8,14 @@ int main()
     cin>>n;
     int a[n];
     stack<int> st;
-    for(int i =0;i<n;i++)
+    for(int i =1;i<=n;i++)
     {
         cin>>a[i];
     }
     int count =0;
     int ans =0;
     st.push(0);
-    for(int i =0;i<n;i++)
+    for(int i =1;i<=n;i++)
     {
         if(a[i]>0)
             st.push(i);
