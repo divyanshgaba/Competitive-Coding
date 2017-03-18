@@ -21,7 +21,7 @@ int main()
         a[i]=1;
     }
     ex-= n*n;
-    int i =n*n;
+    int i = n*n;
     while(ex>0)
     {
         ex-=(m-1);

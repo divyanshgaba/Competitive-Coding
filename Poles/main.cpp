@@ -6,7 +6,7 @@ long long n,k;
 long long ans[5001][5001];
 long long rec;
 long long dip[5001][5001];
-pair<long long,long long> a[5001];
+pair<int,int> a[5001];
 long long cost(int i, int j)
 {
 
@@ -39,6 +39,7 @@ long long answer(int i,int j)
 int main()
 {
     cin>>n>>k;
+    k=k%2500;
     for(int i =0;i<n;i++)
         cin>>a[i].first>>a[i].second;
     cout<<answer(0,k)<<endl;
