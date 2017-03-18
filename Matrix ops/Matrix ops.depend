@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1489786670 source:d:\divyansh\documents\competitive-coding\matrix ops\main.cpp
+	<iostream>
+	<algorithm>
+	<vector>
+
