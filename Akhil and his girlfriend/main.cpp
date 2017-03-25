@@ -11,7 +11,7 @@ using namespace std;
 
 typedef long long ll;
 typedef vector<int> vi;
-typedef pair<int,int> pi;
+typedef pair<char,char> pi;
 
 
 int mem[26];
@@ -25,26 +25,31 @@ int main()
     {
         string s;
         cin>>s;
+        memset(mem,0,sizeof(mem));
+        for(int i =0;i<s.length();i++) mem[s[i]-'a'] =1;
         int q;
         cin>>q;
         pi a[q];
-        memset(mem,0,sizeof(mem));
         int flag =0;
         for(int i =0;i<q;i++)
         {
             cin>>a[i].F>>a[i].S;
-            if(mem[a[i].S-'a'] !=0)
+        }
+        for(int i =q-1;i>=0;i--)
+        {   if(mem[a[i].S-'a'] == 0)
             {
                 flag =1;
+                break;
             }
             mem[a[i].F-'a'] = 1;
+            mem[a[i].S-'a'] =0;
         }
         if(flag ==0)
         {
             cout<<"Yes\n";
         }
         else
-        cout<<"No\n";
+            cout<<"No\n";
 
     }
 	return 0;

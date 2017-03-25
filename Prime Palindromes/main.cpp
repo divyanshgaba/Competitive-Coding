@@ -1,54 +1,68 @@
-#include <iostream>
-#include <cmath>
+/*
+ID: divyans19
+PROG: pprime
+LANG: C++11
+*/
+#include<bits/stdc++.h>
+//#define fast ios_base::sync_with_stdio(0); fin.tie(0); fout.tie(0);
+#define F first
+#define S second
+#define PB push_back
+#define MP make_pair
+#define REP(i,a,b) for (int i = a; i <= b; i++)
+
 using namespace std;
+
+typedef long long ll;
+typedef vector<int> vi;
+typedef pair<int,int> pi;
+char c[11];
+char d[] = "0123456789";
+int n;
 int a,b;
-
-int prime(int number)
+vector<int> ans;
+void prime()
 {
-    if(number == 2)
-        return 1;
-    if(number%2==0||number==1)
-        return 0;
-    for(int i =3;i<=sqrt(number);i+=2)
-        if(number%i==0)
-            return 0;
-    cout<<number<<endl;
-    return 1;
-
+    //fout<<c<<endl;
+    int temp = stoi(c);
+    if (!(temp<=b && temp>=a))
+        return;
+    for(int i =2;i<=sqrt(temp);i++)
+    {
+        if(temp%i == 0)
+            return;
+    }
+    ans.PB(temp);
 }
 
-int palindrome(int st,int en,int digit)
+void palindrome(int st,int en)
 {
-
     if(st>en)
-        return 0;
-    if (st==en)
-        {
-            return digit*pow(10,st);
-        }
-
-    return digit*((pow(10,en-st))+pow(10,st)) + palindrome(st+1,en-1,digit+1);
-
-
+    {
+        prime();
+        return;
+    }
+    for(int i =0;i<10;i++)
+    {
+        if(st==0&&i==0)            continue;
+        c[st] = c[en] = d[i];
+        palindrome(st+1,en-1);
+    }
 }
 int main()
 {
-    //cout<<prime(11)<<endl;
-    cin>>a>>b;
-    int lena=0,lenb=0;
-    int temp =a;
-    while(temp!=0)
+	//fast;
+	ifstream fin("pprime.in");
+	ofstream fout("pprime.out");
+	fin>>a>>b;
+	n = floor(log10(b))+1;
+	for(int i =1;i<=n;i++)
     {
-        lena++;
-        temp /=10;
+        c[i]='\n';
+        palindrome(0,i-1);
     }
-    temp =b;
-    while(temp!=0)
-    {
-        lenb++;
-        temp/=10;
-    }
-    //cout<<lena<<" "<<lenb<<endl;
-    cout<<palindrome(0,2,1)<<endl;
-    return 0;
+    for(auto it:ans)
+        fout<<it<<"\n";
+	return 0;
+
 }
