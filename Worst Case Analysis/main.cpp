@@ -24,15 +24,23 @@ int main()
         ll n;
         cin>>n;;
         ll a[n];
+        priority_queue<int,vector<int>,greater<int> > q;
         ll cmp =0;
         for(int i =0;i<n;i++)
-            cin>>a[i];
-        sort(a,a+n);
-        ll sum=0;
-        for(int i =0;i<n-1;i++)
         {
-            sum+=(a[i]+a[i+1]-1);
-            a[i+1]+=a[i];
+            cin>>a[i];
+            q.push(a[i]);
+            cout<<q.top();
+        }
+        ll sum=0;
+        while(q.size()>1)
+        {
+            ll x = q.top();
+            q.pop();
+            ll y = q.top();
+            q.pop();
+            sum+=(x+y-1);
+            q.push(x+y);
         }
         cout<<sum<<endl;
 
