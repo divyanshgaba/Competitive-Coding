@@ -13,6 +13,7 @@ typedef long long ll;
 typedef vector<int> vi;
 typedef pair<int,int> pi;
 
+int mem[100001];
 
 int main()
 {
@@ -21,29 +22,26 @@ int main()
 	cin>>test;
 	while(test--)
     {
-        ll n;
-        cin>>n;;
-        ll a[n];
-        priority_queue<ll,vector<ll>,greater<ll> > q;
-        ll cmp =0;
+        int n;
+        cin>>n;
+        memset(mem,0,sizeof(mem));
+        int ans = 0;
         for(int i =0;i<n;i++)
         {
-            cin>>a[i];
-            q.push(a[i]);
+            int x;
+            cin>>x;
+            ans^=x;
+            if(mem[x]==0)
+            {
+                mem[x]=1;
+            }
+            else if(mem[x]==1)
+            {
+                mem[x]=2;
+                ans^=x;
+            }
         }
-        ll sum=0;
-        while(q.size()>1)
-        {
-            ll x = q.top();
-            q.pop();
-            ll y = q.top();
-            q.pop();
-            sum+=(x+y-1);
-            q.push(x+y);
-        }
-        cout<<sum<<endl;
-
-
+        cout<<ans<<endl;
     }
 	return 0;
 
