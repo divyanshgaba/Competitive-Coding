@@ -2,11 +2,13 @@
 
 !*.cpp
 !*.c
-!.gitignore
+!/.gitignore
 
 /*
 !/*.cpp
 !/*.c
 
 /*/*
+!/*/*.cpp
+!/*/*.c
 
