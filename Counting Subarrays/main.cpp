@@ -13,31 +13,33 @@ typedef long long ll;
 typedef vector<int> vi;
 typedef pair<int,int> pi;
 
+ll mem[100005];
 
 int main()
 {
 	fast;
-    int test;
-    cin>>test;
+	int test;
+	cin>>test;
     while(test--)
     {
-        int a[3];
-        cin>>a[0]>>a[1]>>a[2];
-        sort(a,a+3);
-        int b = a[1];
-        if(a[2] == 0)
+        int n;
+        cin>>n;
+        ll a[n+1];
+        memset(mem,0,sizeof(mem));
+        ll sum =0;
+        for(int i =1;i<=n;i++)
         {
-            cout<<0<<endl;
-            continue;
+            cin>>a[i];
+            if(a[i]>=a[i-1])
+                mem[i]=mem[i-1]+1;
+            else
+                mem[i]=1;
         }
-        //int c = a[2];
-        if(b<a[2])
-        cout<<2*b+1<<endl;
-        else
-            cout<<2*b<<endl;
 
+        for(int i =1;i<=n;i++)
+            sum+=mem[i];
+        cout<<sum<<endl;
     }
-
 	return 0;
 
 }

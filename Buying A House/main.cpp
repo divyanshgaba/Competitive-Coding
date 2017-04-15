@@ -17,26 +17,22 @@ typedef pair<int,int> pi;
 int main()
 {
 	fast;
-    int test;
-    cin>>test;
-    while(test--)
+	int n,m,k;
+    cin>>n>>m>>k;
+    int a[n];
+    int house =1e9;
+    for(int i =0;i<n;i++)
     {
-        int a[3];
-        cin>>a[0]>>a[1]>>a[2];
-        sort(a,a+3);
-        int b = a[1];
-        if(a[2] == 0)
-        {
-            cout<<0<<endl;
+        cin>>a[i];
+        if(a[i]==0)
             continue;
+        if(a[i]<=k)
+        {
+            if(abs(house-m) > abs(i-m))
+                house = i;
         }
-        //int c = a[2];
-        if(b<a[2])
-        cout<<2*b+1<<endl;
-        else
-            cout<<2*b<<endl;
-
     }
+    cout<<abs(house-m+1)*10<<endl;
 
 	return 0;
 
