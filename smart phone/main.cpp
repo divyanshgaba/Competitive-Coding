@@ -1,32 +1,31 @@
-#include <iostream>
-#include <algorithm>
-#include <vector>
+#include<bits/stdc++.h>
+#define fast ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define F first
+#define S second
+#define PB push_back
+#define MP make_pair
+#define REP(i,a,b) for (int i = a; i <= b; i++)
+
+
 using namespace std;
+
+typedef long long ll;
+typedef vector<int> vi;
+typedef pair<int,int> pi;
+
 
 int main()
 {
-    int n;
-    long long int budget[500000];
+    ll n;
     cin>>n;
-    for(int i=0;i<n;i++)
-        cin>>budget[i];
-    sort(budget,budget+n);
-    int temp=n/2;
-    long long reven=budget[temp]*(n-temp);
-    while(1)
+    ll a[n];
+    for(ll i =0;i<n;i++)
+        cin>>a[i];
+    sort(a,a+n);
+    ll rev =0;
+    for(ll i =0;i<n;i++)
     {
-        if((budget[temp+1]*(n-temp-1))>=reven)
-        {
-            temp++;
-            reven=budget[temp]*(n-temp);
-        }
-        else if((budget[temp-1]*(n-temp+1))<=reven)
-        {
-            temp--;
-            reven=budget[temp]*(n-temp);
-        }
-        else
-            break;
+        rev = max(rev,a[i]*(n-i));
     }
-    cout<<reven;
+    cout<<rev<<endl;
 }

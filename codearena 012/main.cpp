@@ -15,65 +15,55 @@ typedef pair<int,int> pi;
 
 int n;
 int a[101][101];
-int mem[101][101][3];
-bool ans(int i, int j,int check)
+int mr[101][101];
+int mb[101][101];
+bool right(int i , int j)
 {
-    if(i==n)
-    {
-        return true;
-    }
-    if(j<0 ||j>=n)
-        return false;
-    if(a[i][j] == 0)
-        return false;
-    if(a[i][j] != check)
-        return false;
-    if(mem[i][j][check]!=0)
-    {
-        if(mem[i][j][check] == -1)
-            return false;
-        return true;
-    }
-    bool temp = max(ans(i+1,j,check),ans(i+1,j-1,check));
-    temp = max(temp,ans(i+1,j+1,check));
-    temp = max(temp,ans(i,j-1,check));
-    temp = max(temp,ans(i,j,check));
-    temp = max(temp,ans(i,j+1,check));
-    if(temp)
-        mem[i][j][check] = 1;
-    else
-        mem[i][j][check]= -1;
-    return temp;
-}
-bool sol(int i, int j,int check)
-{
+
     if(j==n)
-    {
         return true;
-    }
-    if(i<0 ||i>=n)
+    if(i==n||i<0)
         return false;
-    if(a[i][j] == 0)
+    if(a[i][j] != 2)
         return false;
-    if(a[i][j] != check)
-        return false;
-    if(mem[i][j][check]!=0)
+    if(mr[i][j]!=0)
     {
-        if(mem[i][j][check] == -1)
-            return false;
-        return true;
+        if(mr[i][j]==1)
+            return true;
+        return false;
     }
-    bool temp = max(ans(i+1,j+1,check),ans(i,j+1,check));
-    temp = max(temp,ans(i-1,j+1,check));
-    temp = max(temp,ans(i-1,j,check));
-    temp = max(temp,ans(i,j,check));
-    temp = max(temp,ans(i+1,j,check));
+    bool temp= right(i+1,j+1) + right(i,j+1) + right(i-1,j+1);
     if(temp)
-        mem[i][j][check] = 1;
+        mr[i][j] = 1;
     else
-        mem[i][j][check]= -1;
+        mr[i][j]=-1;
     return temp;
 }
+bool bot(int i , int j)
+{
+
+    if(i==n)
+        return true;
+    if(j==n||j<0)
+        return false;
+    if(a[i][j] != 1)
+        return false;
+    if(mb[i][j]!=0)
+    {
+        if(mb[i][j]==1)
+            return true;
+        return false;
+    }
+    bool temp = bot(i+1,j+1) + bot(i+1,j-1) + bot(i+1,j);
+    if(temp)
+        mb[i][j]=1;
+    else
+        mb[i][j]=-1;
+    return temp;
+
+}
+
+
 int main()
 {
 	fast;
@@ -83,23 +73,20 @@ int main()
         for(int j =0;j<n;j++)
             cin>>a[i][j];
     }
-    bool one,two;
+    bool one=false,two=false;
     for(int i =0;i<n;i++)
     {
-        if(a[0][i]==0)
-            continue;
-        one = ans(0,i,1);
+        one = bot(0,i);
         if(one)
             break;
     }
 	for(int i =0;i<n;i++)
     {
-        if(a[i][0]==0)
-            continue;
-        two = sol(i,0,2);
+        two = right(i,0);
         if(two)
             break;
     }
+
     if(one&&two)
         cout<<"AMBIGUOUS\n";
     else if(one)

@@ -13,31 +13,34 @@ typedef long long ll;
 typedef vector<int> vi;
 typedef pair<int,int> pi;
 
+int ans(int s)
+{
+    int t=0;
+    for(int i =1;i<=sqrt(s);i++)
+    {
+        t+=(s/i -i+1);
+    }
+    return t;
+
+}
 
 int main()
 {
-	fast;
+    fast;
     int test;
     cin>>test;
     while(test--)
     {
-        int a[3];
-        cin>>a[0]>>a[1]>>a[2];
-        sort(a,a+3);
-        int b = a[1];
-        if(a[2] == 0)
-        {
-            cout<<0<<endl;
-            continue;
-        }
-        //int c = a[2];
-        if(b<a[2])
-        cout<<2*b+1<<endl;
+        int s;
+        cin>>s;
+        if(s==1)
+            cout<<1<<endl;
+        else if(s<9)
+            cout<<s+s/2 -1<<endl;
         else
-            cout<<2*b<<endl;
+            cout<<ans(s)<<endl;
 
     }
-
 	return 0;
 
 }
