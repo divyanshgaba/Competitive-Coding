@@ -31,6 +31,11 @@
 *.out
 *.app
 
+
 *.cbp
 *.depend
+
 *.layout
+
+!*.cpp
+!*.c
