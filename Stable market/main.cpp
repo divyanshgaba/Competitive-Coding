@@ -21,9 +21,18 @@ int main()
 	cin>>test;
 	while(test--)
     {
-        int n;
-        cin>>n;
+        int n,q;
+        cin>>n>>q;
+        int a[n+1];
+        for(int i =1;i<=n;i++)
+            cin>>a[i];
 
+        for(int i =0;i<q;i++)
+        {
+            int a,b,k;
+            cin>>a>>b>>k;
+
+        }
     }
 	return 0;
 

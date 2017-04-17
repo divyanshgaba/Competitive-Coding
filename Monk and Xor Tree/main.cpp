@@ -13,18 +13,16 @@ typedef long long ll;
 typedef vector<int> vi;
 typedef pair<int,int> pi;
 
+int n,k;
+vector<int> v[100001];
+bool visited[100001];
 
 int main()
 {
 	fast;
-	int test;
-	cin>>test;
-	while(test--)
-    {
-        int n;
-        cin>>n;
+	cin>>n>>k
+	for(int i =0;i<n;i++)
 
-    }
 	return 0;
 
 }

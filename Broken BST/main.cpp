@@ -12,19 +12,19 @@ using namespace std;
 typedef long long ll;
 typedef vector<int> vi;
 typedef pair<int,int> pi;
-
+int n;
+int a[300001];
 
 int main()
 {
 	fast;
-	int test;
-	cin>>test;
-	while(test--)
+    cin>>n;
+
+    for(int i =0;i<n;i++)
     {
-        int n;
-        cin>>n;
 
     }
+
 	return 0;
 
 }

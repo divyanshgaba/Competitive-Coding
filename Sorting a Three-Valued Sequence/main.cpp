@@ -17,14 +17,16 @@ typedef pair<int,int> pi;
 int main()
 {
 	fast;
-	int test;
-	cin>>test;
-	while(test--)
+	int n;
+	cin>>n;
+	int a[n];
+	for(int i =0;i<n;i++)
     {
-        int n;
-        cin>>n;
-
+        cin>>a[i];
     }
+    sort(a,a+n);
+    for(auto it:a)
+        cout<<it<<endl;
 	return 0;
 
 }

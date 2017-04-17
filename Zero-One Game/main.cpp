@@ -18,13 +18,7 @@ int main()
 {
 	fast;
 	int test;
-	cin>>test;
-	while(test--)
-    {
-        int n;
-        cin>>n;
-
-    }
+	
 	return 0;
 
 }
