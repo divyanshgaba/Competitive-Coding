@@ -22,6 +22,7 @@ public:
     graph(int v);
     void addEdge(int u,int v,int w);
     void shortestPath(int s);
+    void addKEdge(int u,int v,int w);
 };
 graph::graph(int n)
 {
@@ -34,7 +35,11 @@ void graph::addEdge(int u,int v,int w)
     adj[u].PB(MP(v,w));
     adj[v].PB(MP(u,w));
 }
-
+void graph::addKEdge(int u,int v,int w)
+{
+    adj[u].PB(MP(v,0));
+    adj[v].PB(MP(u,w));
+}
 void graph::shortestPath(int src)
 {
     set<pi> setds;
@@ -82,10 +87,7 @@ int main()
        graph g(n+1);
        for(int i =1;i<=k;i++)
        {
-           for(int j =i+1;j<=k;j++)
-           {
-               g.addEdge(i,j,x);
-           }
+            g.addKEdge(0,i,x);
        }
        for(int i =0;i<m;i++)
        {

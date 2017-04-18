@@ -14,56 +14,92 @@ typedef vector<int> vi;
 typedef pair<int,int> pi;
 
 map<ll,ll> sc;
-vector<ll> primes;
+vector<ll> prime;
+vector<ll> realprime;
 void sieve(ll n)
 {
     bool pr[n+1];
     memset(pr,true,sizeof(pr));
-    for(ll p = 2;p*p<=n;p++)
+    pr[0]=pr[1]=false;
+    for(ll p = 2;p<=sqrt(n)+1;p++)
     {
         if(pr[p]==true)
         {
-            primes.PB(p);
+            //cout<<p<<endl;
+            prime.PB(p);
             for(ll i =p*2;i<=n;i+=p)
                 pr[i]=false;
         }
     }
 }
+void segmentedSieve(int n)
+{
+
+    int limit = floor(sqrt(n))+1;
+    sieve(limit);
+    int low  = limit;
+    int high = 2*limit;
+    while (low < n)
+    {
+        bool mark[limit+1];
+        memset(mark, true, sizeof(mark));
+
+        for (int i = 0; i < prime.size(); i++)
+        {
+            int loLim = floor(low/prime[i]) * prime[i];
+            if (loLim < low)
+                loLim += prime[i];
+
+            for (int j=loLim; j<high; j+=prime[i])
+                mark[j-low] = false;
+        }
+        for (int i = low; i<high; i++)
+            if (mark[i - low] == true)
+                prime.PB(i);//cout<<i<<endl;
+
+        // Update low and high for next segment
+        low  = low + limit;
+        high = high + limit;
+        if (high >= n) high = n;
+    }
+    //cout<<realprime.size()<<endl;
+}
 ll score(ll n)
 {
     if(n==1)
         return 1;
-    if(sc.count(n)>0)
-        return sc[n];
-    ll temp =1;
-    ll next =1;
-    ll hold = n;
-    for(auto it: primes)
+    priority_queue<ll> pq;
+    ll ans =1;
+    for(auto it:prime)
     {
-        ll m =1;
-        //if(n%it==0)cout<<it<<endl;
-        while(n%it==0)
+        int cnt=1;
+        while(n%it ==0)
         {
+            cnt++;
             n/=it;
-            m++;
         }
-        temp*=m;
+        if(cnt>1)
+            ans*=cnt,pq.push(cnt);
+        if(n==1)
+            break;
+        //cout<<ans<<endl;
     }
-    //cout<<n<<endl;
-    if(n>2)
-        temp*=2;
-    for(auto it:primes)
+    //cout<<ans<<endl;
+    ll tmp,hold=ans;
+    while(!pq.empty())
     {
-        if(hold%it==0)
-        {
-            if(score(next)<score(hold/it))
-                next=hold/it;
-        }
+        ll top = pq.top();
+        //cout<<top<<endl;
+        pq.pop();
+        tmp = hold/top;
+        top--;
+        hold = tmp*top;
+        ans +=(tmp*top);
+        if(top>1)
+            pq.push(top);
     }
-    //cout<<next<<endl;
-    temp = temp + score(next);
-    sc[hold] =temp;
-    return temp;
+    return ans;
+
 }
 
 int main()
@@ -71,8 +107,9 @@ int main()
 	fast;
 	ll a,b;
 	cin>>a>>b;
-	sieve(sqrt(b)+1);
-	//sort(primes.begin(),primes.end());
+    segmentedSieve(b);
+        //sort(primes.begin(),primes.end());
+    //for(auto it:prime)        cout<<it<<" ";    cout<<endl;
 	ll ans =0;
 	for(ll i =a;i<=b;i++)
     {
