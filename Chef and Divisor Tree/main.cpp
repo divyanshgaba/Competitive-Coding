@@ -21,58 +21,27 @@ void sieve(ll n)
     bool pr[n+1];
     memset(pr,true,sizeof(pr));
     pr[0]=pr[1]=false;
-    for(ll p = 2;p<=sqrt(n)+1;p++)
+    for(ll p = 2;p*p<=n;p++)
     {
         if(pr[p]==true)
         {
-            //cout<<p<<endl;
-            prime.PB(p);
             for(ll i =p*2;i<=n;i+=p)
                 pr[i]=false;
         }
     }
-}
-void segmentedSieve(int n)
-{
-
-    int limit = floor(sqrt(n))+1;
-    sieve(limit);
-    int low  = limit;
-    int high = 2*limit;
-    while (low < n)
-    {
-        bool mark[limit+1];
-        memset(mark, true, sizeof(mark));
-
-        for (int i = 0; i < prime.size(); i++)
-        {
-            int loLim = floor(low/prime[i]) * prime[i];
-            if (loLim < low)
-                loLim += prime[i];
-
-            for (int j=loLim; j<high; j+=prime[i])
-                mark[j-low] = false;
-        }
-        for (int i = low; i<high; i++)
-            if (mark[i - low] == true)
-                prime.PB(i);//cout<<i<<endl;
-
-        // Update low and high for next segment
-        low  = low + limit;
-        high = high + limit;
-        if (high >= n) high = n;
-    }
-    //cout<<realprime.size()<<endl;
+    for(int i =2;i<=n;i++)
+        if(pr[i])
+            prime.PB(i);
 }
 ll score(ll n)
 {
-    if(n==1)
-        return 1;
     priority_queue<ll> pq;
     ll ans =1;
     for(auto it:prime)
     {
         int cnt=1;
+        if(n/it <= 1)
+            break;
         while(n%it ==0)
         {
             cnt++;
@@ -80,10 +49,11 @@ ll score(ll n)
         }
         if(cnt>1)
             ans*=cnt,pq.push(cnt);
-        if(n==1)
-            break;
         //cout<<ans<<endl;
     }
+    if(n>2)
+        ans*=2,pq.push(2);
+    //cout<<pq.size()<<endl;
     //cout<<ans<<endl;
     ll tmp,hold=ans;
     while(!pq.empty())
@@ -107,7 +77,7 @@ int main()
 	fast;
 	ll a,b;
 	cin>>a>>b;
-    segmentedSieve(b);
+	sieve(min(max(1e3,sqrt(b+1)+1),1e6));
         //sort(primes.begin(),primes.end());
     //for(auto it:prime)        cout<<it<<" ";    cout<<endl;
 	ll ans =0;
