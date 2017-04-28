@@ -14,14 +14,30 @@ typedef vector<int> vi;
 typedef pair<int,int> pi;
 
 int n,k;
-vector<int> v[100001];
+int a[100001];
+int p[100001];
+vector<int> adj[100001];
 bool visited[100001];
+
+int solve(int i ,int x)
+{
+    int temp =0;
+    x^=a[i];
+    if(!x^k)
+        temp =1;
+
+
+}
 
 int main()
 {
 	fast;
-	cin>>n>>k
-	for(int i =0;i<n;i++)
+	cin>>n>>k;
+	for(int i =1;i<=n;i++)
+        cin>>a[i];
+    for(int i =2;i<=n;i++)
+        cin>>p[i],adj[p[i]].PB(i);
+    cout<<solve(1,0)<<endl;
 
 	return 0;
 
