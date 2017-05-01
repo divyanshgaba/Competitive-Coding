@@ -15,55 +15,38 @@ typedef pair<ll,ll> pi;
 int main()
 {
 	fast;
-	int test;
+	ll test;
 	cin>>test;
 	while(test--)
     {
         ll n,p;
         cin>>n>>p;
-        int a[n];
-        ll sum[n];
-        memset(sum,0,sizeof(sum));
+        ll a[n];
         for(int i =0;i<n;i++)
         {
             cin>>a[i];
-            if(i ==0)
-                sum[i]=a[i];
-            else
-            {
-                sum[i]= sum[i-1] +a[i];
-            }
-        }
-        ll ele=-1,cnt=0;
 
+        }
+        map<ll,ll> mp;
+        mp[0]=1;
+        mp[p]=1;
+        ll now =0;
+        ll ele=0;
+        ll cnt=0;
         for(int i =0;i<n;i++)
         {
-            if(ele < sum[i]%p)
+            now = (now + a[i])%p;
+            auto x = *(mp.lower_bound((now+1+p)%p));
+            if((now-x.first+p)%p > ele)
             {
-                ele =sum[i]%p;
-                cnt=1;
+                ele = (now-x.first + p )%p;
+                cnt = x.second;
             }
-            else if(ele == sum[i]%p)
-            {
-                cnt++;
-            }
-            for(int j =0;j<i;j++)
-            {
-                ll t = (sum[i] - sum[j])%p;
-                if(ele < t)
-                {
-                    ele = t;
-                    cnt=1;
-                }
-                else if(ele == t)
-                {
-                    cnt++;
-                }
-            }
+            else if( (now-x.first+p)%p == ele)
+                cnt+=x.second;
+            mp[now]++;
         }
         cout<<ele<<" "<<cnt<<endl;
-
-
     }
 	return 0;
 

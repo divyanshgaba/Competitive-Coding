@@ -30,7 +30,6 @@ ll countFact(ll n, ll p)
     return k;
 }
 
-/* This function calculates (a^b)%MOD */
 long long pow(ll a, ll b, ll MOD)
 {
     long long x=1,y=a;
@@ -48,10 +47,6 @@ long long pow(ll a, ll b, ll MOD)
     return x;
 }
 
-/*  Modular Multiplicative Inverse
-    Using Euler's Theorem
-    a^(phi(m)) = 1 (mod m)
-    a^(-1) = a^(m-2) (mod m) */
 long long InverseEuler(ll n, ll MOD)
 {
     return pow(n,MOD-2,MOD);
