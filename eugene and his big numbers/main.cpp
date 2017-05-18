@@ -1,38 +1,51 @@
-#include <iostream>
-long long m;
+#include<bits/stdc++.h>
+#define fast ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define F first
+#define S second
+#define PB push_back
+#define MP make_pair
+#define REP(i,a,b) for (int i = a; i <= b; i++)
+
+
 using namespace std;
 
-long long primeFactors(long long n)
-{
-    long long c =1;
-    // Print the number of 2s that divide n
-    while (n%2 == 0)
-    {
-        c *= 2%m;
-        n = n/2;
-    }
-    for (int i = 3; i <= sqrt(n); i = i+2)
-    {
-        while (n%i == 0)
-        {
-            c *= i%m;
-            n = n/i;
-        }
-    }
-    if(n>2)
-        c *=n%m;
-    return c;
-}
+typedef unsigned long long ll;
+typedef vector<int> vi;
+typedef pair<int,int> pi;
 
+ll m;
+ll exp(ll b,ll e)
+{
+    ll r =1;
+    while(e>0)
+    {
+        if(e&1)r=(r*b)%m;
+        b=(b*b)%m;
+        e>>=1;
+    }
+    return r%m;1;
+}
+ll c;
+ll solve(ll a,ll n)
+{
+    if(n==1)
+        return a%m;
+    ll t = solve(a,n/2);
+    if(n & 1)
+        return ((exp(10,c)*((t*exp(10,c*(n/2))%m+t)%m))%m+a%m)%m;
+    return ((t*exp(10,c*(n/2)))%m+t)%m;
+}
 int main()
 {
-    long long test;
+    fast;
+    int test;
     cin>>test;
     while(test--)
     {
-        long long a,n;
+        ll a,n;
         cin>>a>>n>>m;
-
+        c = log10(a)+1;
+        cout<<solve(a,n)<<endl;
     }
     return 0;
 }
