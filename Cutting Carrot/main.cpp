@@ -17,20 +17,15 @@ typedef pair<int,int> pi;
 int main()
 {
 	fast;
-	int a,b,c;
-	cin>>a>>b>>c;
-	int n;
-	cin>>n;
-	int ans =0;
-	for(int i =0;i<n;i++)
+	int n,h;
+	cin>>n>>h;
+	double area = (double(h)/2);
+	double req = area/(double(n));
+	for(double i =1;i<n;i++)
     {
-        int x;
-        cin>>x;
-        if(x>b && x<c)
-            ans++;
-
+        double req = (i*h*h)/n;
+        cout<<fixed<<setprecision(10)<<sqrt(req)<<" ";
     }
-    cout<<ans<<endl;
 
 	return 0;
 

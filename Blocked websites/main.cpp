@@ -58,7 +58,6 @@ int getp(struct node* root, string s)
         if(!cursor->child[in])
         {
             return i+1;
-            return true;
         }
         cursor=cursor->child[in];
     }

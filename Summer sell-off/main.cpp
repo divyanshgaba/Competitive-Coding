@@ -17,20 +17,24 @@ typedef pair<int,int> pi;
 int main()
 {
 	fast;
-	int a,b,c;
-	cin>>a>>b>>c;
-	int n;
-	cin>>n;
-	int ans =0;
+	int n,f;
+	cin>>n>>f;
+	ll ans =0;
+	priority_queue<ll> q;
 	for(int i =0;i<n;i++)
+	{
+	    pair<ll,ll> kl;
+	    cin>>kl.F>>kl.S;
+	    ans += min(kl.F,kl.S);
+        q.push(min(2*kl.F,kl.S) - min(kl.F,kl.S));
+	}
+	while(f--)
     {
-        int x;
-        cin>>x;
-        if(x>b && x<c)
-            ans++;
-
+        ans+=q.top();
+        q.pop();
     }
     cout<<ans<<endl;
+
 
 	return 0;
 

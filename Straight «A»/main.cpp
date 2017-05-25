@@ -17,20 +17,14 @@ typedef pair<int,int> pi;
 int main()
 {
 	fast;
-	int a,b,c;
-	cin>>a>>b>>c;
-	int n;
-	cin>>n;
-	int ans =0;
+	ll n,k;
+	cin>>n>>k;
+	ll a[n];
+	ll sum = 0;
 	for(int i =0;i<n;i++)
-    {
-        int x;
-        cin>>x;
-        if(x>b && x<c)
-            ans++;
+        cin>>a[i],sum+=a[i];
+    cout<<max(0LL,2*k*n -n -2*sum)<<endl;
 
-    }
-    cout<<ans<<endl;
 
 	return 0;
 
