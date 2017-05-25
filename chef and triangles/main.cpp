@@ -8,6 +8,7 @@ bool triangle(long long int a,long long int b, long long int c)
     if(a+b > c )//&& a+c >b && b+c>a )
         return true;
     return false;
+
 }
 
 int main()
