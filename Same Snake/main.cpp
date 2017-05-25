@@ -24,45 +24,37 @@ struct point
     {
         return x==a.x&&y==a.y;
     }
-    bool operator>(point a)
+    bool operator<(point a)
     {
         if(x==a.x)
-            return y>a.y;
-        return x>a.x;
+            return y<a.y;
+        return x<a.x;
     }
 };
 
 bool answer(point a,point b,point c,point d)
 {
-    if(a==c || b==c)
-        return true;
-    if(a==d || b==d)
-        return true;
+    bool ans  = false;
+
+    if(a.x == b.x  && c.x == d.x && a.x == c.x)
+    {
+        if((a.y<=c.y && c.y<=b.y) || (a.y<=d.y && d.y<=b.y))
+           ans = true;
+        if((c.y<= a.y && a.y<=d.y) || (c.y<=b.y && b.y<=d.y))
+            ans = true;
+    }
     if(a.y == b.y && c.y == d.y && a.y == c.y)
     {
-
-        if( (a.x<=c.x && b.x>=c.x) || (a.x<=d.x&&b.x>=d.x))
-            return true;
-        if( (c.x<=a.x && d.x>=a.x)  || (c.x<=b.x && d.x>=b.x))
-            return true;
-        if( (a.x>=c.x && b.x<=c.x) || (a.x>=d.x&&b.x<=d.x))
-            return true;
-        if( (c.x>=a.x && d.x<=a.x)  || (c.x>=b.x && d.x<=b.x))
-            return true;
+        if((a.x<=c.x && c.x<=b.x) || (a.x<=d.x && d.x<=b.x))
+           ans = true;
+        if((c.x<= a.x && a.x<=d.x) || (c.x<=b.x && b.x<=d.x))
+            ans = true;
     }
-    if(a.x == b.x && c.x == d.x && a.x == b.x)
+    if(a == c || a == d || b== c || b == d)
     {
-
-        if( (a.y<=c.y && b.y>=c.y) || (a.y<=d.y&&b.y>=d.y))
-            return true;
-        if((c.y<=a.y && d.y>=a.y) || (c.y<=b.y && d.y>=b.y))
-            return true;
-        if( (a.y>=c.y && b.y<=c.y) || (a.y>=d.y&&b.y<=d.y))
-            return true;
-        if((c.y>=a.y && d.y<=a.y) || (c.y>=b.y && d.y<=b.y))
-            return true;
+        ans = true;
     }
-    return false;
+    return ans;
 
 }
 
@@ -76,6 +68,10 @@ int main()
         point a,b,c,d;
         cin>>a.x>>a.y>>b.x>>b.y;
         cin>>c.x>>c.y>>d.x>>d.y;
+        if(b<a)
+            swap(a,b);
+        if(d<c)
+            swap(c,d);
         if(answer(a,b,c,d))
             cout<<"yes\n";
         else
