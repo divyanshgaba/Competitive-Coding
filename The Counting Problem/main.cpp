@@ -1,69 +1,75 @@
 #include<bits/stdc++.h>
+#define fast ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define F first
+#define S second
+#define PB push_back
+#define MP make_pair
+#define REP(i,a,b) for (ll i = a; i <= b; i++)
 using namespace std;
-int gsum(int btree[], int index)
+typedef long long ll;
+ll merge(ll a[],ll b[],ll l,ll m,ll r)
 {
-    int sum = 0;
+    ll i,j,k,inv=0;
+    i=l,j=m,k=l;
+    while(i<=m-1 && j<=r)
+    {
+        if(a[i]<=a[j])
+        {
+             b[k++] = a[i++];
 
-    while (index > 0)
-    {
-        sum += btree[index];
-        index -= index & (-index);
-    }
-    return sum;
-}
-void upbit(int btree[], int n, int index, int val)
-{
-    while (index <= n)
-    {
-       btree[index] += val;
-       index += index & (-index);
-    }
-}
-int answer(int arr[], int n)
-{
-    int ico = 0;
-    int mel = 0;
-    for (int i=0; i<n; i++)
-        if (mel < arr[i])
-            mel = arr[i];
-    int BIT[mel+1];
-    for (int i=1; i<=mel; i++)
-        BIT[i] = 0;
-    for (int i=n-1; i>=0; i--)
-    {
-        ico += gsum(BIT, arr[i]-1);
-        upbit(BIT, mel, arr[i], 1);
-    }
+        }
+        else
+        {
+            b[k++]=a[j++];
+            inv+=(m-i);
+        }
 
-    return ico;
+    }
+    while(i<=m-1)
+        b[k++]=a[i++];
+    while(j<=r)
+        b[k++]=a[j++];
+    for(ll i =l;i<=r;i++)
+        a[i]=b[i];
+    return inv;
+
 }
+
+
+ll mergesort(ll a[],ll b[],ll l,ll r)
+{
+    ll inv = 0,m;
+    if(r>l)
+    {
+        m = (r+l)/2;
+        inv +=mergesort(a,b,l,m);
+        inv+=mergesort(a,b,m+1,r);
+        inv+=merge(a,b,l,m+1,r);
+    }
+    return inv;
+}
+
+ll answer(ll arr[],ll n)
+{
+    ll *temp = new ll[n];
+    return mergesort(arr,temp,0,n-1);
+}
+
 int main()
 {
-    int t;
+    fast;
+    ll t;
     cin>>t;
     while(t--)
     {
-        int n;
+        ll n;
         cin>>n;
-        int a[n];
-        int flag =0,flag2=0;
-        for(int i =0;i<n;i++)
+        ll a[n];
+        for(ll i =0;i<n;i++)
         {
             cin>>a[i];
-            if(i!=0)
-            {
-                if(a[i-1]>a[i])
-                    flag=1;
-                if(a[i-1]<a[i])
-                    flag2=1;
-            }
         }
-        if(flag==1&&flag2==1)
-            cout<<answer(a,n)<<endl;
-        else if(flag==0)
-            cout<<"0"<<endl;
-        else
-            cout<<n<<endl;
+        cout<<answer(a,n)<<endl;
     }
     return 0;
 }

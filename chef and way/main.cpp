@@ -1,33 +1,40 @@
-#include <iostream>
-#define MOD 1000000007
+#include<bits/stdc++.h>
+#define fast ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define F first
+#define S second
+#define PB push_back
+#define MP make_pair
+#define REP(i,a,b) for (int i = a; i <= b; i++)
+
+
 using namespace std;
+
+typedef unsigned long long ll;
+typedef vector<int> vi;
+typedef pair<int,int> pi;
+const ll INF = 1e13;
 int n,k;
 int a[100002];
-int ans[100002];
-int answer(int i)
+double ans[100002];
+double lg[100002];
+double answer(int i)
 {
-    if(i == n)
+    if(i==n)
+        return lg[i];
+    double temp = answer(i+1);
+    for(int j =2;j<=k;j++)
     {
-        return a[i];
+        temp = min(temp,answer(i+j));
     }
-    if(ans[i]!=0)
-        return ans[i];
-    //cout<<i<<" "<<a[i]<<endl;
-    int temp = (a[i]*answer(i+1))%MOD;
-    for(int j =2;j<=k&&i+j<=n;j++)
-    {
-
-        temp =min(temp,((a[i]*(answer(i+j)%MOD))%MOD));
-    }
-    ans[i]=temp%MOD;
-    return temp%MOD;
+    temp+=lg[i];
+    return temp;
 }
 
 int main()
 {
     cin>>n>>k;
     for(int i =1;i<=n;i++)
-        cin>>a[i];
+        cin>>a[i],lg[i] = log10(a[i]);
     cout<<answer(1)<<endl;
     return 0;
 }
