@@ -34,8 +34,5 @@
 
 *.cbp
 *.depend
-**/
-
 *.layout
-!**/*.cpp
-!**/*.c
+
