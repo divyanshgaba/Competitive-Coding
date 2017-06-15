@@ -16,78 +16,64 @@ using namespace std;
 typedef long long ll;
 typedef vector<int> vi;
 typedef pair<int,int> pi;
-const int N = 1e5;
-int a[N];
-int tree[4*N];
-int lazy[4*N];
-int n;
-void build(int node=1,int st=0,int en=n-1)
+const ll N = 1e6;
+ll a[N];
+ll tree[4*N];
+ll lazy[4*N];
+ll n;
+ll query(ll node,ll st,ll en,ll l,ll r)
 {
-    if(st == en)
-    {
-        tree[node] = a[st];
-        return;
-    }
-    int mid = (st+en)/2;
-    build(2*node,st,mid);
-    build(2*node+1,mid+1,en);
-    tree[node] = tree[2*node] + tree[2*node+1];
-}
-int query(int node,int lo,int hi,int l,int r)
-{
-    if(lo > r || hi < l)
-    {
+    if(st >r || en < l || en< st)
         return 0;
-    }
-    if(lazy[node] !=0)
+    if(lazy[node] != 0)
     {
-        tree[node]+=(hi-lo+1)*lazy[node];
-        if(lo!=hi)
+        tree[node]+=((en-st +1)*lazy[node]);
+        if(st != en)
         {
             lazy[2*node]+=lazy[node];
             lazy[2*node+1]+=lazy[node];
         }
         lazy[node]=0;
     }
-    if(l <= lo && hi <=r)
+    if(l<=st && en<=r)
+    {
         return tree[node];
-    int mid = (lo+hi)/2;
-    int p1 = query(2*node,lo,mid,l,r);
-    int p2 = query(2*node +1,mid+1,hi,l,r);
+    }
+    ll mid = (st+en)/2;
+    ll p1 = query(2*node,st,mid,l,r);
+    ll p2 = query(2*node+1,mid+1,en,l,r);
     return p1+p2;
+
 }
-void updaterange(int node,int lo,int hi,int l ,int r,int val)
+void update(ll node,ll st,ll en,ll l,ll r,ll val)
 {
     if(lazy[node]!=0)
     {
-        tree[node]+=(hi-lo +1 )*lazy[node];
-    }
-    if(lo!=hi)
-    {
-        lazy[2*node] +=lazy[node];
-        lazy[2*node+1]+=lazy[node];
-    }
-    lazy[node]=0;
-    if(lo> hi || lo >r || hi<l)
-    {
-        return;
-    }
-    if(lo>=l && hi <=r)
-    {
-        tree[node]+=(hi-lo+1)*val;
-        if(hi!=lo)
+        tree[node]+=((en-st+1)*lazy[node]);
+        if(st != en)
         {
-            lazy[node*2]+=val;
-            lazy[2*node +1]+=val;
+            lazy[2*node]+=lazy[node];
+            lazy[2*node+1]+=lazy[node];
+        }
+        lazy[node]=0;
+    }
+    if(st>en || en<l || st>r)
+        return;
+    if(l<=st && en<=r)
+    {
+        tree[node]+=((en-st+1)*val);
+        if(st!=en)
+        {
+            lazy[2*node]+=val;
+            lazy[2*node+1]+=val;
         }
         return;
     }
-    int mid = (lo+hi)/2;
-    updaterange(2*node,lo,mid,l,r,val);
-    updaterange(2*node+1,mid+1,hi,l,r,val);
+    ll mid = (st+en)/2;
+    update(2*node,st,mid,l,r,val);
+    update(2*node+1,mid+1,en,l,r,val);
     tree[node] = tree[2*node] + tree[2*node+1];
 }
-
 int main()
 {
 	fast;
@@ -95,28 +81,28 @@ int main()
 	cin>>test;
 	while(test--)
     {
-        int q;
+        ll q;
         memset(tree,0,sizeof(tree));
         memset(lazy,0,sizeof(lazy));
         memset(a,0,sizeof(a));
         cin>>n>>q;
         //build();
-        /*for(int i = 0;i<4*n;i++)
+        /*for(ll i = 0;i<4*n;i++)
             cout<<tree[i]<<" ";
         cout<<endl;*/
         while(q--)
         {
-            int t;
+            ll t;
             cin>>t;
             if(t==0)
             {
-                int p,q,v;
+                ll p,q,v;
                 cin>>p>>q>>v;
-                updaterange(1,0,n-1,p-1,q-1,v);
+                update(1,0,n-1,p-1,q-1,v);
             }
             else
             {
-                int p,q;
+                ll p,q;
                 cin>>p>>q;
                 cout<<query(1,0,n-1,p-1,q-1)<<endl;
             }
