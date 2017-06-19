@@ -1,69 +1,49 @@
-#include <iostream>
-#include <algorithm>
-#include <cmath>
-
+#include <bits/stdc++.h>
 using namespace std;
 
-int binaryInsert(int[], int, long);
+#define tr(c,i) for(auto i=(c).begin(); i != (c).end(); i++)
+#define rep(i,n) for(int i=0;i<(n);i++)
+#define forup(i,a,b) for(int i=(a);i<=(b);i++)
+#define tcsolve() int tcs; cin >> tcs; forup(tc, 1, tcs) solve();
 
-int main() {
-
-    int cases;
-    cin >> cases;
-
-    for (int case_no = 0; case_no < cases; case_no++) {
-
-        int num_of_snakes, queries;
-        cin >> num_of_snakes >> queries;
-
-        int lengths[num_of_snakes];
-        int *ptr;
-        ptr = lengths;
-
-        for (int snake = 0; snake < num_of_snakes; snake++) {
-            cin >> lengths[snake];
-        }
-
-        sort(lengths, lengths + sizeof(lengths)/sizeof(lengths[0]));
-
-        for (int query = 0; query < queries; query++) {
-            long min_length, max_snakes_possible = 0;
-            cin >> min_length;
-            int index = binaryInsert(ptr, num_of_snakes, min_length);
-//            cout << index;
-            int snakesLeft = index;
-            max_snakes_possible += num_of_snakes - index;
-
-            while ((min_length - lengths[index - 1]) <= snakesLeft - 1) {
-                max_snakes_possible++;
-                snakesLeft -= (min_length - lengths[index - 1]) + 1;
-                index--;
-            }
-
-            cout << max_snakes_possible << endl;
-
-        }
-
-    }
-
-    return 0;
-
+int bitsz(int n) {
+	int i = 0;
+	while (n) n >>= 1, i++;
+	return i;
 }
 
-int binaryInsert(int *arr, int length, long num) {
+void solve() {
+	int n, k, t, ans;
+	cin >> n >> k;
+	set<int, greater<int> > s, w;
+	rep (i, n) {
+		cin >> t;
+		s.insert(t);
+	}
+	// Guassian Elimination!
+	while (!s.empty()) {
+		int m = *s.begin();
+		s.erase(m);
+		w.insert(m);
+		int z = bitsz(m) - 1;
+		tr (s, it) {
+			t = *it;
+			if (t>>z & 1) {
+                    				s.insert(t^m);
 
-    int index = length / 2;
+				s.erase(t);
+			}
+		}
+	}
+	ans = k;
+	tr (w, it)
+		if ((ans^(*it)) > ans)
+			ans ^= *it;
+	cout << ans << endl;
+}
 
-    if (length == 0) return 0;
-
-    else if (arr[index-1] < num && arr[index] >= num) return index;
-
-    else if (arr[index] < num) {
-        return index + 1 + binaryInsert(&arr[length/2 + 1], length - (length/2) - 1, num);
-    }
-
-    else if (arr[index] >= num) {
-        return binaryInsert(&arr[0], length/2, num);
-    }
-
+int main () {
+	std::ios::sync_with_stdio(false);
+	tcsolve();
+	return 0;
 }

@@ -1,81 +1,88 @@
 #include <iostream>
+#include <algorithm>
+#include <vector>
 using namespace std;
 
-void make_palin(char *v,char *s,int len){
-	int hi = len-1;
-	int lo = 0;
+bool arr[100000];
+int shift_result[100000];
 
-	while(lo <= hi){
-		v[lo] = s[lo];
-		v[hi] = s[lo];
-		lo++;
-		hi--;
+class myclass{
+public:
+	int first,second;
+}myvector[100000];
+
+inline bool compare(myclass a,myclass b){
+	return (a.first < b.first);
+}
+
+inline void store_count(const int k,const int n,int base){
+
+	myvector[0].first = base;
+	myvector[0].second = 0;
+	for(int i=1;i<n;i++){
+		myvector[i].first = myvector[i-1].first + arr[(i+k-1)%n] - arr[i-1];
+		myvector[i].second = i;
 	}
 }
 
+inline bool check(int a,int i,int diff,int n){
+	int r=(diff+i);
+    if(r>n)
+        r%=n;
+	if(i>r){
+		if(r<a && a<i) return 0;
+		else return 1;
+	}
+	if(i-1<a && a<r+1) return 1;
+	else return 0;
+}
+
+inline void store_result(const int k,const int n){
+	int y=n-k;
+
+	sort(myvector,myvector+n,compare);
+
+	int j=0;
+	for(int i=0;i<n;i++){
+		for(j=n-1;j>-1;j--){
+			if(check(myvector[j].second,i,y,n)) break;
+		}
+		if(j>-1) shift_result[i]=(myvector[j].first);
+	}
+
+	return;
+}
+
 int main(){
-	int T;
-	string in;
+	ios_base::sync_with_stdio(0);
+	cin.tie(NULL);
+	cout.tie(NULL);
 
-	cin >> T;
+	int N,K,P;
+	char s;
 
-	for(int t=0;t<T;t++){
-		cin >> in;
+	cin >> N >> K >> P;
 
-		char out[in.size()];
-		int i=0,len=in.size();
-		while(in[i]!='\0'){
-			if(in[i]!='9') break;
-			i++;
+	if(K>N) K=N;
+
+ 	int base=0;
+	for(int i=0;i<N;i++){
+		cin >> arr[i];
+		if(i<K) base += arr[i];
+	}
+
+	store_count(K,N,base);
+	store_result(K,N);
+
+	int shiftamount=0,sh;
+	for(int i=0;i<P;i++){
+		cin >> s;
+		if(s == '?'){
+			sh = shiftamount % N;
+			cout << shift_result[(N-sh)%N] << "\n";
 		}
-
-		if(in[i]=='\0'){
-			for(int j=0;j<i+1;j++){cout << '1';}
-			cout << endl;
-			continue;
+		else{
+			shiftamount++;
 		}
-
-		if(len==1){
-			cout << (char)(in[0]+1) << endl;
-			continue;
-		}
-
-		make_palin(&out[0],&in[0],len);
-
-		float mid=(1.0*len)/2;
-		bool flag=0;
-
-		int lo=(int)(mid-1);
-		int hi=(int)(mid+1);
-		if(len%2==0) hi--;
-
-		while(lo>-1){
-			if(in[lo] < in[hi]){
-				flag=1;
-				break;
-			}
-			else if(in[lo] > in[hi]) break;
-			lo--;hi++;
-		}
-
-		if(lo==-1 || flag){
-				if(len%2==0){
-					hi=len/2;lo=hi-1;
-				}
-				else {
-					hi=(len-1)/2;lo=hi;
-				}
-
-				while(out[lo]=='9'){
-					out[hi] = '0';
-					out[lo] = '0';
-					hi++;lo--;
-				}
-
-				out[lo] += 1;
-				out[hi] = out[lo];
-		}
-
-		cout << out << endl;
 	}
 }

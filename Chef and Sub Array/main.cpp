@@ -12,116 +12,70 @@ using namespace std;
 typedef long long ll;
 typedef vector<int> vi;
 typedef pair<int,int> pi;
+const int N = 1e5;
+int n;
+int sum[4*N+1];
+int n2,n4;
 
-int getMid(int s, int e) {  return s + (e -s)/2;  }
-
-int RMQUtil(int *st, int ss, int se, int qs, int qe, int index)
+void build()
 {
-    if (qs <= ss && qe >= se)
-        return st[index];
-
-    if (se < qs || ss > qe)
-        return -1;
-
-    int mid = getMid(ss, se);
-    return max(RMQUtil(st, ss, mid, qs, qe, 2*index+1),
-                  RMQUtil(st, mid+1, se, qs, qe, 2*index+2));
+    for(int t = n2-1;t>0;t--) sum[t] = max(sum[t<<1],sum[t<<1|1]);
 }
-
-int RMQ(int *st, int n, int qs, int qe)
+int query(int l,int r)
 {
-    if (qs < 0 || qe > n-1 || qs > qe)
+
+    int res = 0;
+    for(l+=n2,r+=n2;l<r;l>>=1,r>>=1)
     {
-        printf("Invalid Input");
-        return -1;
+        if(l&1)
+            res = max(res,sum[l++]);
+        if(r&1)
+            res = max(res,sum[--r]);
     }
-
-    return RMQUtil(st, 0, n-1, qs, qe, 0);
+    return res;
 }
-int constructSTUtil(int arr[], int ss, int se, int *st, int si)
-{
-    if (ss == se)
-    {
-        st[si] = arr[ss];
-        return arr[ss];
-    }
-    int mid = getMid(ss, se);
-    st[si] =  max(constructSTUtil(arr, ss, mid, st, si*2+1),
-                     constructSTUtil(arr, mid+1, se, st, si*2+2));
-    return st[si];
-}
-
-int *constructST(int arr[], int n)
-{
-    int x = (int)(ceil(log2(n)));
-    int max_size = 2*(int)pow(2, x) - 1;
-
-    int *st = new int[max_size];
-    constructSTUtil(arr, 0, n-1, st, 0);
-    return st;
-}
-
-
 
 int main()
 {
 	fast;
-	int n,k,p;
+	int k,p;
 	cin>>n>>k>>p;
-	int a[2*n],sum[2*n];
-	for(int i =0;i<n;i++)
+	n2=2*n,n4=2*n2;
+	int a[n2];
+	for(int i = 0;i<n;i++)
         cin>>a[i],a[i+n]=a[i];
-    sum[0]=a[0];
-    for(int i =1;i<2*n;i++)
-    {
-        sum[i] = sum[i-1]+a[i];
-    }
-    int seg[2*n];
-    memset(seg,0,sizeof(seg));
-	for(int i =2*n-1;i>=0;i--)
-    {
-        if(i!=0)
-            seg[i] = -sum[i-1];
-        if(i + k- 1 < 2*n)
-            seg[i] += sum[i+k-1];
-        else
-            seg[i]+=sum[2*n-1];
-
-    }
-
-    /*for(int i =0;i<2*n;i++)
+    for(int i = 0;i<2*n;i++)
         cout<<a[i]<<" ";
     cout<<endl;
-    for(int i =0;i<2*n;i++)
-        cout<<sum[i]<<" ";
-    cout<<endl;
-    for(int i =0;i<2*n;i++)
-        cout<<seg[i]<<" ";
-    cout<<endl;*/
     string s;
     cin>>s;
-    if(k>=n)
+    sum[0+n2] = a[0];
+    for(int i = 1;i<n2;i++)
     {
-        for(auto i:s)
-        {
-            if(i=='?')
-                cout<<sum[n-1]<<endl;
-        }
-        return 0;
+        if(i < k )
+            sum[n2+i] =sum[n2+i-1] + a[i];
+        else
+            sum[n2+i] = sum[n2+i-1] + a[i] - a[i-k];
     }
-    int *st =constructST(seg,2*n);
-    int j =n;
-    for(int i =0;i<p;i++)
+    for(int i = 0;i<n4;i++)
+        cout<<sum[i]<<" ";
+    cout<<endl;
+    build();
+    for(int i = 0;i<n4;i++)
+        cout<<sum[i]<<" ";
+    cout<<endl;
+    int pos = n;
+    for(auto i:s)
     {
-        if(s[i] == '!')
+        if(i == '?')
         {
-            j--;
-            if(j==0)
-                j=n;
+            cout<<query(pos+1,pos + n - k  +1)<<endl;
         }
         else
         {
-            cout<<RMQ(st,2*n,j,j+n-k)<<endl;
+            pos--;
+            if(pos == 0)
+                pos = n;
         }
     }
 	return 0;
