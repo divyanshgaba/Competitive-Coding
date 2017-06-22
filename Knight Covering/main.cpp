@@ -18,32 +18,10 @@ typedef vector<ll> vi;
 typedef pair<ll,ll> pi;
 
 int n,m;
-const ll INF = 1e9;
-ll val;
-int grid[3][50];
 
 
-int answer(int i,int j)
+int solve(int n,int m)
 {
-    if(i == n || j == m)
-    {
-        if(set_all())
-            return 0;
-        return INF;
-    }
-    if(a[i][j] == 2)
-        return INF;
-    a[i][j] = 2;
-    refresh();
-    int temp = min(1+answer(i+1,j),1 + answer(i,j+1));
-    a[i][j]=0;
-    refresh();
-
-    temp = min(temp,answer(i+1,j));
-    temp = min(temp,answer(i,j+1));
-
-    return temp;
-
 
 }
 
@@ -54,13 +32,17 @@ int main()
 	cin>>test;
 	while(test--)
     {
-        memo.clear();
-        a[0].reset(),a[1].reset(),a[2].reset();
         cin>>n>>m;
         if(n == 1)
             cout<<m<<endl;
+        else if(n == 2)
+        {
+            cout<< (m/6)*4 + min(m%6,2)*2<<endl;
+        }
         else
-            cout<<answer(0,0)<<endl;
+        {
+            cout<<solve(n,m)<<endl;
+        }
     }
 	return 0;
 
