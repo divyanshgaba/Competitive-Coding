@@ -8,6 +8,10 @@
 	<stdio.h>
 	<math.h>
 
-1497435225 source:d:\divyansh\documents\competitive-coding\test\main.cpp
+1498296355 source:d:\divyansh\documents\competitive-coding\test\main.cpp
 	<iostream>
+	<cmath>
+	<vector>
+	<algorithm>
+	<fstream>
 

@@ -83,6 +83,7 @@ int main()
 {
 	fast;
 	pre();
+	//ofstream cout("output.txt");
 	//cout<<primes.size();
 	ll n;
 	cin>>n;
