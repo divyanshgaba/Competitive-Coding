@@ -18,7 +18,28 @@ int main()
 {
 	fast;
 	int test;
+    cin>>test;
+    while(test--)
+    {
+        int n;
+        cin>>n;
+        ll a[n];
+        for(int i  =0;i<n;i++)
+            cin>>a[i];
+        int k;
+        cin>>k;
+        ll ele = a[k-1];
+        sort(a,a+n);
+        for(int i = 0;i<n;i++)
+        {
+            if(a[i] == ele)
+            {
+                cout<<i+1<<endl;
+                break;
+            }
+        }
 
+    }
 	return 0;
 
 }
