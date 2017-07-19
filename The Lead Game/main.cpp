@@ -17,18 +17,29 @@ typedef long long ll;
 typedef vector<int> vi;
 typedef pair<int,int> pi;
 
-ll sum_of_series(ll n)
-{
-    return (n*(n+1))/2;
-}
-ll ans(ll x,ll y)
-{
-    return sum_of_series(x)*(y+1) + sum_of_series(y)*(x+1);
-}
 void solve()
 {
-    ll m,b;
-    cin>>m>>b;
+    int n;
+    cin>>n;
+    ll winner = 0;
+    ll answer = 0;
+    ll score[3];
+    score[1]=score[2] = 0;
+    while(n--)
+    {
+        ll a,b;
+        cin>>a>>b;
+        score[1]+=a,score[2]+=b;
+        if(answer < llabs(score[1] - score[2]))
+        {
+            answer = llabs(score[1]-score[2]);
+            if(score[1] > score[2])
+                winner = 1;
+            else
+                winner = 2;
+        }
+    }
+    cout<<winner<<" "<<answer<<endl;
 
 }
 

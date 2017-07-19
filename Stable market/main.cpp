@@ -12,76 +12,75 @@ using namespace std;
 typedef long long ll;
 typedef vector<int> vi;
 typedef pair<int,int> pi;
+const int INF = 1e9;
+const int N = 1e5+5;
+int n;
+vector<int> seg[2*N];
+int zero[N];
+void init()
+{
+    memset(zero,0,sizeof(zero));
+    for(int i = 0;i<2*N;i++) seg[i].clear();
+}
+void build()
+{
+    for(int i = n-1;i>0;i--) merge(seg[i<<1].begin(),seg[i<<1].end(),seg[i<<1|1].begin(),seg[i<<1|1].end(),back_inserter(seg[i]));
+}
 
 
+int query(int l,int r,int k)
+{
+    int res = 0;
+    for(l+=n,r+=n;l<r;l>>=1,r>>=1)
+    {
+        if(l&1)
+            res+=(upper_bound(seg[l].begin(),seg[l].end(),k) - lower_bound(seg[l].begin(),seg[l].end(),k)),l++;
+        if(r&1)
+            --r,res+=(upper_bound(seg[r].begin(),seg[r].end(),k) - lower_bound(seg[r].begin(),seg[r].end(),k));
+    }
+    return res;
+}
 
 int main()
 {
-	fast;
+	//fast;
 	int test;
 	cin>>test;
 	while(test--)
     {
-        int n,q;
+        init();
+        int q;
         cin>>n>>q;
         int a[n];
         for(int i =0;i<n;i++)
             cin>>a[i];
-        int b[n];
-        vi ind[n+1];
-        ind[1].PB(0);
-        b[0]=1;
-        for(int i =1;i<n;i++)
+        seg[n].PB(1);
+        for(int i = 1;i<n;i++)
         {
-            if(a[i]==a[i-1])
-                b[i]=b[i-1]+1;
+            if(a[i] == a[i-1])
+                seg[i+n].PB(seg[i+n-1][0] + 1);
             else
-                b[i]=1;
-
-            ind[b[i]].PB(i);
+                seg[i+n].PB(1);
         }
-        int blsize[n];
-        blsize[n-1] =1;
-        int cnt =1;
-        for(int i =n-2;i>=0;i--)
-        {
-            if(b[i] >= b[i+1])
-            {
-                cnt =1;
-
-            }
-        }
+        // segment tree
+        build();
         for(int i =0;i<q;i++)
         {
             int l,r,k;
             cin>>l>>r>>k;
-            //changing to 0-index
-            l--,r--;
-            int ans = upper_bound(ind[k].begin(),ind[k].end(),r) - lower_bound(ind[k].begin(),ind[k].end(),l);
-            //cout<<s<<" - "<<f<<" = "<<s-f<<endl;
-            if(b[l]!=1)
+            int ans = query(l-1,r,k);
+            if(seg[l-1+n][0] != 1)
             {
-                // get location where the block starts
-                int loc = l - b[l] +1;
-                //get size of that block
-                int len = mp[loc];
-
-                //if it was counted
-                if(b[l] <= k)
-                    ans--;
-
-                //if it should be counted
-                if(len - b[l] +1 >=k)
-                    ans++;
-
-                //no block completely lies within the range
-                int endsAt = len + loc-1;
-                if(endsAt >= r)
+                if(k < seg[l-1+n][0])
                 {
-                    if(r-l +1 < k)
+                    if((a[l-1] == a[l-1 + k-1]) && ((seg[l-1 + k-1 + n][0] - seg[l-1 + n][0] + 1) == k))
+                        ans++;
+                }
+                else
+                {
+                    if((a[l-1] != a[l-1 + k-1]) || ((seg[l-1 + k-1 + n][0] - seg[l-1 + n][0] +1 )!= k))
                         ans--;
                 }
-
             }
             cout<<ans<<endl;
 

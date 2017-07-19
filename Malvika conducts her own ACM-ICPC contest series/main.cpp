@@ -17,18 +17,36 @@ typedef long long ll;
 typedef vector<int> vi;
 typedef pair<int,int> pi;
 
-ll sum_of_series(ll n)
+bool poss(int c,int e,int m,int h)
 {
-    return (n*(n+1))/2;
+    if(e <0 || m < 0)
+        return false;
+    int t = ceil(double(c)/2);
+    if(c <= min(t,e) + min(t,m) + min(t,h))
+        return true;
+    return false;
 }
-ll ans(ll x,ll y)
-{
-    return sum_of_series(x)*(y+1) + sum_of_series(y)*(x+1);
-}
+
 void solve()
 {
-    ll m,b;
-    cin>>m>>b;
+    int e,m,h;
+    cin>>e>>m>>h;
+    int ans = 0;
+    int lo = 0, hi = 1e6;
+    while(lo<hi)
+    {
+        int mid = (lo+hi)/2;
+        if(poss(mid,e-mid,m-mid,h))
+        {
+            lo = mid+1;
+            ans = mid;
+        }
+        else
+        {
+            hi = mid;
+        }
+    }
+    cout<<ans<<endl;
 
 }
 
@@ -36,7 +54,7 @@ int main()
 {
 	fast;
 	int test=1;
-	//cin>>test;
+	cin>>test;
 	while(test--)
     {
         solve();

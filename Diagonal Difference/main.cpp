@@ -17,34 +17,27 @@ typedef long long ll;
 typedef vector<int> vi;
 typedef pair<int,int> pi;
 
-
 int main()
 {
 	fast;
-	srand(time(NULL));
-	ofstream fout("input.txt");
-	fout<<45<<endl;
-	int t = 45;
-	while(t--){
-	int n = rand()%1000 + 1;
-	fout<<n<<" ";
-	int m = rand()%1000 + 1;
-	while(m > n)
-        m = rand()%1000 + 1;
-    fout<<m<<endl;
-    int done[n+1];
-    memset(done,0,sizeof(done));
-	for(int i = 0;i<m;i++)
+	int test=1;
+	//cin>>test;
+	while(test--)
     {
-        int a = rand()%n + 1;
-        while(done[a] == 1)
-            a = rand()%n +1;
-        done[a] =1;
-        fout<<a<<" ";
-    }
-    fout<<endl;
-	}
+		int n;
+		cin>>n;
+		int a[n][n];
+		for(int i = 0;i<n;i++)
+            for(int j =0;j<n;j++)
+                cin>>a[i][j];
+        int sum1, sum2;
+        sum1=sum2=0;
+        for(int i = 0;i<n;i++)
+            for(int j = 0;j<n;j++)
+                sum1 += i==j?a[i][j]:0, i+j == n-1? sum2+=a[i][j]:0;
+        cout<<abs(sum1-sum2)<<endl;
 
+    }
 	return 0;
 
 }

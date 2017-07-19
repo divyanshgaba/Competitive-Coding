@@ -1,4 +1,4 @@
-/************************************
+ /************************************
  *	AUTHOR: 		Divyansh Gaba	*
  *	INSTITUTION: 	ASET, BIJWASAN	*
  ************************************/
@@ -17,29 +17,14 @@ typedef long long ll;
 typedef vector<int> vi;
 typedef pair<int,int> pi;
 
-ll sum_of_series(ll n)
-{
-    return (n*(n+1))/2;
-}
-ll ans(ll x,ll y)
-{
-    return sum_of_series(x)*(y+1) + sum_of_series(y)*(x+1);
-}
-void solve()
-{
-    ll m,b;
-    cin>>m>>b;
-
-}
-
 int main()
 {
 	fast;
 	int test=1;
-	//cin>>test;
+	cin>>test;
 	while(test--)
     {
-        solve();
+
     }
 	return 0;
 

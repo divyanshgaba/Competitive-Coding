@@ -17,21 +17,6 @@ typedef long long ll;
 typedef vector<int> vi;
 typedef pair<int,int> pi;
 
-ll sum_of_series(ll n)
-{
-    return (n*(n+1))/2;
-}
-ll ans(ll x,ll y)
-{
-    return sum_of_series(x)*(y+1) + sum_of_series(y)*(x+1);
-}
-void solve()
-{
-    ll m,b;
-    cin>>m>>b;
-
-}
-
 int main()
 {
 	fast;
@@ -39,7 +24,32 @@ int main()
 	//cin>>test;
 	while(test--)
     {
-        solve();
+		int n,k;
+		cin>>n>>k;
+		priority_queue<ll,vector<ll>,greater<ll>> q;
+		for(int i = 0; i<n;i++)
+        {
+            int a;
+            cin>>a;
+            q.push(a);
+        }
+        int ans = 0;
+        while(q.size()>=2&&q.top() <k)
+        {
+            int a=q.top();q.pop();int b=q.top(); q.pop();
+            int c = a + 2*b;
+            q.push(c);
+            ans++;
+        }
+        if(q.top()<k)
+        {
+            cout<<-1<<endl;
+        }
+        else
+            cout<<ans<<endl;
+
+
+
     }
 	return 0;
 

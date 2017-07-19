@@ -17,34 +17,40 @@ typedef long long ll;
 typedef vector<int> vi;
 typedef pair<int,int> pi;
 
+void solve()
+{
+    string s,k="";
+    cin>>s;
+    int n = s.length();
+    int ans = 0;
+    for(int i = 0;i<n;i++)
+    {
+        if(s[i] == '=')
+            continue;
+        k += s[i];
+    }
+    int l = k.length();
+    int cn =1,h=0,t=0;
+    for(int i = 0;i<l;i++)
+    {
+        if(k[i] == '<')
+            t++,h=0;
+        else
+            h++,t=0;
+        ans = max(ans,max(h,t));
+    }
+    cout<<ans+1<<endl;
+}
 
 int main()
 {
 	fast;
-	srand(time(NULL));
-	ofstream fout("input.txt");
-	fout<<45<<endl;
-	int t = 45;
-	while(t--){
-	int n = rand()%1000 + 1;
-	fout<<n<<" ";
-	int m = rand()%1000 + 1;
-	while(m > n)
-        m = rand()%1000 + 1;
-    fout<<m<<endl;
-    int done[n+1];
-    memset(done,0,sizeof(done));
-	for(int i = 0;i<m;i++)
+	int test=1;
+	cin>>test;
+	while(test--)
     {
-        int a = rand()%n + 1;
-        while(done[a] == 1)
-            a = rand()%n +1;
-        done[a] =1;
-        fout<<a<<" ";
+        solve();
     }
-    fout<<endl;
-	}
-
 	return 0;
 
 }

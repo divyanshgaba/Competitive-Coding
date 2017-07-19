@@ -3,7 +3,7 @@
  *	INSTITUTION: 	ASET, BIJWASAN	*
  ************************************/
 #include<bits/stdc++.h>
-#define fast ios_base::sync_with_stdio(0); cin.tie(0);
+#define fast ios_base::sync_with_stdio(0); cin.tie(0); 
 #define F first
 #define S second
 #define PB push_back
@@ -17,19 +17,9 @@ typedef long long ll;
 typedef vector<int> vi;
 typedef pair<int,int> pi;
 
-ll sum_of_series(ll n)
-{
-    return (n*(n+1))/2;
-}
-ll ans(ll x,ll y)
-{
-    return sum_of_series(x)*(y+1) + sum_of_series(y)*(x+1);
-}
 void solve()
 {
-    ll m,b;
-    cin>>m>>b;
-
+    
 }
 
 int main()

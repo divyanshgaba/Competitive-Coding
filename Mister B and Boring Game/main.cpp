@@ -17,34 +17,25 @@ typedef long long ll;
 typedef vector<int> vi;
 typedef pair<int,int> pi;
 
+void solve()
+{
+    set<int> s;
+    int a,b,l,r;
+    cin>>a>>b>>l>>r;
+
+
+
+}
 
 int main()
 {
 	fast;
-	srand(time(NULL));
-	ofstream fout("input.txt");
-	fout<<45<<endl;
-	int t = 45;
-	while(t--){
-	int n = rand()%1000 + 1;
-	fout<<n<<" ";
-	int m = rand()%1000 + 1;
-	while(m > n)
-        m = rand()%1000 + 1;
-    fout<<m<<endl;
-    int done[n+1];
-    memset(done,0,sizeof(done));
-	for(int i = 0;i<m;i++)
+	int test=1;
+	//cin>>test;
+	while(test--)
     {
-        int a = rand()%n + 1;
-        while(done[a] == 1)
-            a = rand()%n +1;
-        done[a] =1;
-        fout<<a<<" ";
+        solve();
     }
-    fout<<endl;
-	}
-
 	return 0;
 
 }

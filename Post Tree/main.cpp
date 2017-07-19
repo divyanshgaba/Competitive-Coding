@@ -4,82 +4,70 @@
 #define S second
 #define PB push_back
 #define MP make_pair
-#define REP(i,a,b) for (int i = a; i <= b; i++)
+#define REP(i,a,b) for (ll i = a; i <= b; i++)
 
 
 using namespace std;
 
 typedef long long ll;
-typedef vector<int> vi;
-typedef pair<int,int> pi;
+typedef vector<ll> vi;
+typedef pair<ll,ll> pi;
+const ll INF = 1e9 + 7;
+bool visited[100001];
+list<int> adj1[100001],adj2[100001];
+ll ans[100001],a[100001],p[100001];
 
-struct tree
+void dfs1(int i, int j)
 {
-    ll a;
-    int next,supernext;
-    bool is_super;
-    int count;
-}node[100001];
-
-const ll INF = 1e9 +7;
-
-int memo[100001];
-
-int parents(int i)
-{
-   if(i == 0)
-        return 1;
-   if(node[i].count != 0)
-   {
-       return node[i].count;
-   }
-   node[i].count = 1 + pre(node[i].next);
-   return node[i].count;
-}
-void pre(int n)
-{
-    for(int i =0;i<n;i++)
+    if(i!=j)
+        ans[i] += ans[j];
+    for(auto u :adj1[i])
     {
-        node[i].count = parents(i);
+        dfs1(u,i);
+    }
+
+}
+
+void dfs2(int i,ll cur)
+{
+    visited[i]= true;
+    ans[i] = min(a[i],cur);
+    for(auto u: adj1[i])
+    {
+        if(!visited[u])
+            dfs2(u,ans[i]);
     }
 }
-
-
-ll answer(int i,ll best)
-{
-    if(i == 0)
-    {
-        return min(node[i].a,best);
-    }
-    best = min(best,node[i].a);
-    ll ans = best + answer(node[i].next,best);
-    return ans;
-}
-
 
 
 int main()
 {
 	fast;
-	int n;
+	ll n;
 	cin>>n;
-	int p[n];
-	ll a[n];
-	node[0].next = -1;
-	for(int i =1;i<n;++i)
+	for(ll i =1;i<n;++i)
     {
         cin>>p[i];
-        node[i].next = p[i]-1;
+        p[i]--;
+        adj1[p[i]].PB(i);
+        adj2[i].PB(p[i]);
     }
-	for(int i =0;i<n;++i)
+	for(ll i =0;i<n;++i)
     {
         cin>>a[i];
-        node[i].a = a[i];
-        node[i].is_super = false;
     }
-    pre(n);
-    for(int i =0;i<n;i++)
-        cout<<answer(i,INF)<<" ";
+    for(int i = 0;i<n;i++)
+    {
+        if(!visited[i])
+            dfs2(i,INF);
+    }
+    for(int i = 0;i<n;i++)
+        cout<<ans[i]<<" ";
+    cout<<endl;
+    dfs1(0,0);
+    for(int i = 0;i<n;i++)
+        cout<<ans[i]<<" ";
+    cout<<endl;
 
 
 	return 0;

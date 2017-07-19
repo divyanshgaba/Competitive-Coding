@@ -1,51 +1,75 @@
 #include<bits/stdc++.h>
-#define fast ios_base::sync_with_stdio(0); cin.tie(0);
-#define F first
-#define S second
-#define PB push_back
-#define MP make_pair
-#define REP(i,a,b) for (int i = a; i <= b; i++)
-
-
 using namespace std;
-
-typedef long long ll;
-typedef vector<int> vi;
-typedef pair<int,int> pi;
-
-
+int i,j,k,x,T,n,m,CJindex[1001],flag=1, flag2=5,jobChef[1001],jobAss[1001];
 int main()
 {
-	fast;
-	int n;
-	cin>>n;
-	int a[n+1];
-	memset(a,0,sizeof(a));
-	int t;
-	cin>>t;
-	while(t--)
-    {
-        int x,y;
-        cin>>x>>y;
-        a[x]+=y;
-    }
-    int ans[n+2];
-    memset(ans,0,sizeof(ans));
-    for(int i =n;i>0;i--)
-    {
-        if(a[i]>=i)
-        {
+    ifstream fin("input.txt");
+    ofstream cout("output.out");
+    fin>>T;
+	for(i=0;i<T;i++)
+	{
+	    memset(jobAss,0,sizeof(jobAss));
+	    memset(jobChef,0,sizeof(jobChef));
+	    memset(CJindex,0,sizeof(CJindex));
 
-            ans[i] += a[i]/i;
-            a[i] %=i;
-        }
-        ans[i]+=ans[i+1];
-        a[a[i]]+=a[i];
+		flag2=5;
+		fin>>n>>m;
+		for(j=1;j<=m;j++)
+		{
+			fin>>CJindex[j];
+		}
+		for(j=1; j<=n;j++)
+		{
+			for(x=1;x<=m;x++)
+			{	if(j==CJindex[x])
+				{
+					flag=0;
+					jobChef[j]=0;
+					jobAss[j]=0;
+					break;
+				}
 
-    }
-    for(int i =1;i<=n;i++)
-        cout<<ans[i]<<" ";
-
+			}
+			if(flag==0)
+			{
+				flag=1;
+				continue;
+			}
+			if(flag2==5)
+			{
+				jobChef[j]=j;
+				flag2=1;
+				continue;
+			}
+			if(flag!=0)
+			{
+				if(flag2==0)
+				{
+					jobChef[j]=j;
+					flag2=1;
+				}
+				else
+				{
+					 if(flag2==1)
+					{
+						jobAss[j]=j;
+						flag2=0;
+					}
+				}
+			}
+		}
+		for(k=1;k<=n;k++)
+		{
+			if(jobChef[k]!=0)
+                cout<<jobChef[k]<<" ";
+		}
+		cout<<"\n";
+		for(k=1;k<=n;k++)
+		{
+			if(jobAss[k]!=0)
+				cout<<jobAss[k]<<" ";
+		}
+		cout<<"\n";
+	}
 	return 0;
-
 }
