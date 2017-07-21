@@ -16,53 +16,43 @@ using namespace std;
 typedef long long ll;
 typedef vector<int> vi;
 typedef pair<int,int> pi;
-const ll N=860280;
-vector<ll> prime;
+vector<ll> primes(5000000);
+const ll N = 86028121;
+bool isprime[N+10];
+
 void sieve()
 {
-    bitset<N+1> isprime;
-    isprime.reset();
-    prime.PB(2);
-    for(int i = 3;i<=sqrt(N);i+=2)
+    isprime[0] = isprime[1] = true;
+    int lim = sqrt(N)+1;
+    for(int i = 3;i<=lim;i+=2)
     {
         if(!isprime[i])
         {
-            prime.PB(i);
-            isprime[i]=true;
-            for(int j = 2*i;j<=N;j+=i)
-            {
-                isprime[j]=true;
-            }
+            for(int j = i+i;j<=N;j+=i)
+                isprime[j]= true;
         }
     }
-    for(int i = sqrt(N)+1;i<N;i+=2)
-    {
-        if(i%2==0)
-        {
-            i++;
-            continue;
-        }
+    int idx = 1;
+    primes[0]= 2;
+    for(int i = 3;i<=N;i+=2)
         if(!isprime[i])
-        {
-            prime.PB(i);
-        }
-    }
+            primes[idx++] = i;
 }
+
 int main()
 {
-	fast;
-	sieve();
 	int test=1;
+	sieve();
 	//cin>>test;
 	while(test--)
     {
         int q;
-        cin>>q;
+        scanf("%d",&q);
         while(q--)
         {
             int k;
-            cin>>k;
-            cout<<prime[k-1]<<endl;
+            scanf("%d",&k);
+            printf("%d\n",primes[k-1]);
         }
 
     }
