@@ -23,7 +23,6 @@ int n;
 int seg[2*N];
 void build()
 {
-
     for(int i = n-1;i>0;i--) seg[i] =min(seg[i<<1],seg[i<<1|1]);
 }
 int query(int l,int r)
@@ -40,11 +39,11 @@ int query(int l,int r)
 }
 void update(int p,int val)
 {
-    for (seg[p += n] = value; p > 1; p >>= 1) seg[p>>1] = seg[p] + seg[p^1];
+    for (seg[p += n] = val; p > 1; p >>= 1) seg[p/2] = min(seg[p], seg[p^1]);
 }
 int main()
 {
-	fast;
+	//fast;
 	int q;
 	cin>>n>>q;
 	memset(seg,INF,sizeof(seg));
