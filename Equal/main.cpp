@@ -1,8 +1,9 @@
 #include <iostream>
 
 using namespace std;
-int fab[1003];
-int solve(int a)
+typedef long long ll;
+ll fab[1003];
+ll solve(int a)
 {
     if(a==0)
         return 0;
@@ -28,16 +29,17 @@ int main()
     {
         int n;
         cin>>n;
-        int a[n];
-        int mini =1002;
+        memset(fab,0,sizeof(fab));
+        ll a[n];
+        ll mini =1e9;
         for(int i =0;i<n;i++)
         {
             cin>>a[i];
             if(a[i]<mini)
                 mini = a[i];
         }
-        int temp=0;
-        int count =0;
+        ll temp=0;
+        ll count =0;
         for(int i =0;i<n;i++)
         {
                 count+=solve(a[i]-mini);
