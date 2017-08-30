@@ -17,23 +17,32 @@ typedef long long ll;
 typedef vector<int> vi;
 typedef pair<int,int> pi;
 
-bool vis[26];
 int main()
 {
-    string s;
-    bool ans = true;
-    while(cin>>s)
+	fast;
+	int test=1;
+	cin>>test;
+	while(test--)
     {
-        for(auto i:s)
+		int n;
+		cin>>n;
+		bool ans = false;
+		ll a[n+1],sum[n+1]={0};
+		for(int i = 1;i<=n;i++) cin>>a[i];
+		for(int i = 1;i<=n;i++) sum[i] = sum[i-1]+a[i];
+		for(int i = 1;i<=n;i++)
         {
-            vis[tolower(i)-97] = true;
+            if(sum[i-1] == sum[n] - sum[i])
+            {
+                ans = true;
+                break;
+            }
         }
+        if(ans)
+            cout<<"YES\n";
+        else
+            cout<<"NO\n";
     }
-    for(int i = 0;i<26;i++) if(vis[i]== false) ans = false;
-    if(ans)
-        cout<<"pangram\n";
-    else
-        cout<<"not pangram\n";
 	return 0;
 
 }

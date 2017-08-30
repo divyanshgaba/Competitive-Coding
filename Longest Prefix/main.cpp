@@ -17,23 +17,27 @@ typedef long long ll;
 typedef vector<int> vi;
 typedef pair<int,int> pi;
 
-bool vis[26];
 int main()
 {
-    string s;
-    bool ans = true;
-    while(cin>>s)
+	fast;
+	int test=1;
+	cin>>test;
+	while(test--)
     {
-        for(auto i:s)
+		string a,b;
+		cin>>a>>b;
+		unordered_map<char,int> mp;
+		for(auto i:b) mp[i]++;
+		int ans = 0;
+		for(auto i:a)
         {
-            vis[tolower(i)-97] = true;
+            if(mp[i]>0)
+                ans++,mp[i]-=1;
+            else
+                break;
         }
+        cout<<ans<<endl;
     }
-    for(int i = 0;i<26;i++) if(vis[i]== false) ans = false;
-    if(ans)
-        cout<<"pangram\n";
-    else
-        cout<<"not pangram\n";
 	return 0;
 
 }

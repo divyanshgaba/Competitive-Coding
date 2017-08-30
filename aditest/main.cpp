@@ -17,23 +17,18 @@ typedef long long ll;
 typedef vector<int> vi;
 typedef pair<int,int> pi;
 
-bool vis[26];
+class test{
+    public:
+    int a,b;
+    void mera_swap(int x,int y) a=x {}
+};
 int main()
 {
-    string s;
-    bool ans = true;
-    while(cin>>s)
-    {
-        for(auto i:s)
-        {
-            vis[tolower(i)-97] = true;
-        }
-    }
-    for(int i = 0;i<26;i++) if(vis[i]== false) ans = false;
-    if(ans)
-        cout<<"pangram\n";
-    else
-        cout<<"not pangram\n";
+
+    test c;
+    cin>>c.a>>c.b;
+    c.mera_swap(c.b,c.a);
+    cout<<c.a<<c.b<<endl;
 	return 0;
 
 }
