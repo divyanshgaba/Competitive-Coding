@@ -20,32 +20,30 @@ typedef pair<int,int> pi;
 int main()
 {
 	fast;
-	ll n,m,k;
-	cin>>n>>m>>k;
-	unordered_map<ll,vector<pair<ll,ll>>> mp;
-	for(int i = 0;i<k;i++)
+	ll n,k;
+	cin>>n>>k;
+	ll a[n];
+	for(int i = 0;i<n;i++) cin>>a[i];
+	sort(a,a+n);
+	int cov = 0;
+	int ans = 0;
+    for(int i = 0;i<n-1;i++)
     {
-        ll r,c1,c2;
-        cin>>r>>c1>>c2;
-        mp[r].PB(MP(c1,c2));
-    }
-    ll ans = n*m;
-    for(auto i:mp)
-    {
-        sort(i.S.begin(),i.S.end());
-        ll s =0,e=0;
-        for(auto j:i.second)
+        if(a[i] <= cov)
+            continue;
+        for(int j = i+1;j<n;j++)
         {
-            if(e < j.second)
+            if(a[j]-a[i] > k)
             {
-                s = max(j.first,s);
-                e=j.second;
-                ans -=(e-s + 1);
-                s = e+1;
+                cov = a[j-1]+k;
+                ans+=1;
+                break;
             }
         }
     }
+    if(cov < a[n-1])
+        ans+=1;
     cout<<ans<<endl;
-	return 0;
 
+    return 0;
 }

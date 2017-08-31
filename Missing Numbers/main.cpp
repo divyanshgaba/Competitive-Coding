@@ -16,24 +16,23 @@ using namespace std;
 typedef long long ll;
 typedef vector<int> vi;
 typedef pair<int,int> pi;
-
+const int X = 1e4+1;
+int A[X];
 int main()
 {
 	fast;
-    int n,m,x;
+    int n;
     cin>>n;
-    unordered_map<int,int> mp,mt;
-    for(int i = 0;i<n;i++) cin>>x,mp[x]++;
+    int a;
+    for(int i = 0;i<n;i++) cin>>a,A[a]++;
+    int m;
     cin>>m;
-	for(int i = 0;i<m;i++) cin>>x,mt[x]++;
-	set<int> s;
-	for(auto i:mt)
-    {
-        if(i.S != mp[i.F])
-            s.insert(i.F);
-    }
-    for(auto i:s)
-        cout<<i<<" ";
+    int b;
+    for(int i = 0;i<m;i++) cin>>b,A[b]--;
+    for(int i = 1;i<X;i++)
+        if(A[i] != 0)
+            cout<<i<<" ";
+    cout<<endl;
 	return 0;
 
 }

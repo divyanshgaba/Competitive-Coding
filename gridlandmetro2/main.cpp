@@ -17,35 +17,29 @@ typedef long long ll;
 typedef vector<int> vi;
 typedef pair<int,int> pi;
 
+
 int main()
 {
 	fast;
-	ll n,m,k;
-	cin>>n>>m>>k;
-	unordered_map<ll,vector<pair<ll,ll>>> mp;
-	for(int i = 0;i<k;i++)
+    int n,m,k;
+    cin>>n>>m>>k
+
+    unordered_map<int, vector<pair<int,int>>> mp;
+    for(int i = 0;i<k;i++)
     {
-        ll r,c1,c2;
+        int r,c1,c2;
         cin>>r>>c1>>c2;
-        mp[r].PB(MP(c1,c2));
+        mp[r].push_back(make_pair(c1,c2));
     }
-    ll ans = n*m;
-    for(auto i:mp)
+    for(auto i : mp)
     {
-        sort(i.S.begin(),i.S.end());
-        ll s =0,e=0;
-        for(auto j:i.second)
+        sort(i.second.begin(),i.second.end());
+        int cov = 0;
+        for(auto j: i.second)
         {
-            if(e < j.second)
-            {
-                s = max(j.first,s);
-                e=j.second;
-                ans -=(e-s + 1);
-                s = e+1;
-            }
+
         }
     }
-    cout<<ans<<endl;
 	return 0;
 
 }
