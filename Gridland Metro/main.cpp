@@ -29,7 +29,7 @@ int main()
         cin>>r>>c1>>c2;
         mp[r].PB(MP(c1,c2));
     }
-    ll ans = n*m;
+    long long ans = n*m;
     for(auto i:mp)
     {
         sort(i.S.begin(),i.S.end());
