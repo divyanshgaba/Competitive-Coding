@@ -33,6 +33,7 @@ int getRoot(int i)
 {
     while(arr[ i ] != i)
     {
+        arr[ i ] = arr[ arr[ i ] ] ;
         i = arr[ i ];
     }
     return i;
@@ -73,9 +74,9 @@ public:
 	}
 
 };
-
-bool dfs(Graph const &graph, int v, vector<bool> &dis,
-		vector<int> &col)
+bool dis[N];
+int col[N];
+bool dfs(Graph const &graph, int v)
 {
 	for (int u : graph.adj[v])
 	{
@@ -83,12 +84,9 @@ bool dfs(Graph const &graph, int v, vector<bool> &dis,
 		{
 			dis[u] = true;
 			col[u] = !col[v];
-
-
-			if (dfs(graph, u, dis, col) == false)
+			if (dfs(graph, u) == false)
 				return false;
 		}
-
 		else if (col[v] == col[u])
 			return false;
 	}
@@ -97,7 +95,7 @@ bool dfs(Graph const &graph, int v, vector<bool> &dis,
 }
 int main()
 {
-    //fast;
+    fast;
 	int test=1;
 	cin>>test;
 	while(test--)
@@ -131,24 +129,21 @@ int main()
             continue;
         }
         Graph g(n);
-        map<pair<int,int>,int> m;
         for(auto i:one)
         {
-            auto x = MP(getRoot(i.F),getRoot(i.S));
-            auto y = MP(getRoot(i.S),getRoot(i.F));
-            if(m.count(y) > 0 || m.count(x)>0)
-                continue;
-            m[y]=m[x]=1;
             g.addEdge(getRoot(i.F),getRoot(i.S));
         }
-        vector<bool> dis(n,false);
-        vector<int> col(n);
+        memset(dis,0,n*sizeof(bool));
+        memset(col,0,n*sizeof(int));
         for(int i = 0;i<n;i++)
         {
             if(dis[i] == false)
             {
-                dis[i]=true,col[i]= 0;
-                ans = ans&&dfs(g,i,dis,col);
+                dis[i]=true;
+                col[i]= 0;
+                ans = ans&&dfs(g,i);
+                if(!ans)
+                    break;
             }
         }
         if(ans)
