@@ -12,52 +12,50 @@ using namespace std;
 typedef long long ll;
 typedef vector<int> vi;
 typedef pair<int,int> pi;
-int one[30],two[30];
-
-bool check(string s)
-{
-    memset(one,0,sizeof(one));
-    memset(two,0,sizeof(two));
-    int dif=0;
-    int len = s.length();
-    if(len%2!=0)
-    {
-        int j = len/2+1;
-        for(int i =0;i<=len/2;i++)
-        {
-            if(s[i] != s[j++])
-            {
-                dif++;
-                j++;
-            }
-            if(dif==2)
-                return false;
-        }
-    }
-    else
-    {
-        REP(i,0,len/2-1)
-        {
-            if(s[i]!=s[i+len/2])
-                return false;
-        }
-    }
-    return true;
-}
 
 int main()
 {
-	fast;
+	//fast;
 	int test;
     cin>>test;
     while(test--)
     {
         string s;
         cin>>s;
-        if(check(s))
+        int n = s.length();
+        if(n==1)
+        {
+            cout<<"NO\n";
+            continue;
+        }
+        if(n%2==0)
+        {
+            if(s.substr(0,n/2)==s.substr(n/2,n/2))
+                cout<<"YES\n";
+            else
+                cout<<"NO\n";
+            continue;
+        }
+        int a = 0,b = 0;
+        for(int i = 0,j=n/2+1;i<=n/2;i++,j++)
+        {
+            if(s[i]!=s[j])
+            {
+                a++,j--;
+            }
+        }
+        for(int i = 0,j=n/2;j<n;i++,j++)
+        {
+            if(s[i]!=s[j])
+            {
+                b++,i--;
+            }
+        }
+        if(a<=1||b<=1)
             cout<<"YES\n";
         else
             cout<<"NO\n";
+
     }
 	return 0;
 
