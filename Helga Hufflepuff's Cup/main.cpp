@@ -16,22 +16,24 @@ using namespace std;
 typedef long long ll;
 typedef vector<int> vi;
 typedef pair<int,int> pi;
-
+const int m = 1e9 +7;
 int main()
 {
-    int n1,n2,n3;
-    cin>>n1>>n2>>n3;
-    int x;
-    map<int,int> m;
-    for(int i = 0;i<n1+n2+n3;i++)
-        cin>>x,m[x]++;
-    set<int> s;
-    for(auto i:m)
-        if(i.S >=2)
-            s.insert(i.F);
-    cout<<s.size()<<endl;
-    for(auto i:s)
-        cout<<i<<endl;
+	fast;
+	int n,m;
+	cin>>n>>m;
+	vector<int> adj[n];
+	for(int i = 0;i<n-1;i++)
+    {
+        int u,v;
+        cin>>u>>v;
+        u--,v--;
+        adj[u].PB(v);
+        adj[v].PB(u);
+    }
+    int k,x;
+    cin>>k>>x;
+
 	return 0;
 
 }

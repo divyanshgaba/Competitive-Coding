@@ -19,19 +19,27 @@ typedef pair<int,int> pi;
 
 int main()
 {
-    int n1,n2,n3;
-    cin>>n1>>n2>>n3;
-    int x;
-    map<int,int> m;
-    for(int i = 0;i<n1+n2+n3;i++)
-        cin>>x,m[x]++;
-    set<int> s;
-    for(auto i:m)
-        if(i.S >=2)
-            s.insert(i.F);
-    cout<<s.size()<<endl;
-    for(auto i:s)
-        cout<<i<<endl;
+	fast;
+	int test=1;
+	cin>>test;
+	while(test--)
+    {
+		string s;
+		cin>>s;
+		int n = s.length();
+		string k = s;
+		reverse(k.begin(),k.end());
+		bool ans = true;
+		for(int i = 1;i<n;i++)
+        {
+            if(abs(s[i]-s[i-1]) != abs(k[i]-k[i-1]))
+                ans = false;
+        }
+        if(ans)
+            cout<<"Funny\n";
+        else
+            cout<<"Not Funny\n";
+    }
 	return 0;
 
 }
