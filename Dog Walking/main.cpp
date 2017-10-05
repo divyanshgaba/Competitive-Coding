@@ -27,7 +27,7 @@ int main()
     {
 		int n,k;
 		cin>>n>>k;
-		vecotr<ll> dog(n);
+		vector<ll> dog(n);
 		for(int i = 0;i<n;i++) cin>>dog[i];
 		set<ll> s(dog.begin(),dog.end());
 		dog.assign(s.begin(),s.end());

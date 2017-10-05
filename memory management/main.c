@@ -1,93 +1,101 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
+#include <iostream>
+#include <vector>
+#include <queue>
+#include <deque>
+using namespace std;
+
 int main()
 {
-
     int test;
-    scanf("%d",&test);
+    cin>>test;
     while(test--)
     {
         int p,s,n;
-        scanf("%d %d %d",&p,&s,&n);
-        long long memo[n];
-        int i;
-        for(i=0;i<n;i++)
+        cin>>p>>s>>n;
+        vector<int> pages;
+        for(int i = 0;i<n;i++)
         {
-            scanf("%lld",&memo[i]);
+            int x;
+            cin>>x;
+            pages.push_back(x/s);
         }
-        int fifo[p],lru[p];
-        for(i=0;i<p&&i<n;i++)
+        int fifo = 0;
+        queue<int> q;
+        for(auto i:pages)
         {
-            int page = floor(memo[i]/s);
-            fifo[i]=page;
-            lru[i]=page;
-        }
-        int kf=0,kl=0;
-        int page;
-        int cf=0,cl=0;
-        int j,ff=0,lf=0;
-        for(i=p;i<n;i++)
-        {
-            ff=0;
-            lf=0;
-            page=floor(memo[i]/s);
-
-            for(j=0;j<p;j++)
+            if(q.size()<p)
             {
-                if(fifo[j]==page)
+                bool ans = false;
+                for(int j = 0;j<q.size();j++)
                 {
-
-                    ff=1;
+                    if(q.front()==i)
+                        ans = true;
+                    q.push(q.front()),q.pop();
                 }
-                if(lru[j]==page)
+                if(!ans)
+                    q.push(i);
+                continue;
+            }
+            else
+            {
+                bool ans = false;
+                for(int j = 0;j<p;j++)
                 {
-                    int temp=lru[j];
-                    int hsh=j;
-                    if(kl!=0){
-                    while(hsh!=(kl-1))
-                    {
-                        lru[hsh]=lru[(hsh+1)%p];
-                        hsh=(hsh+1)%p;
-                    }}
+                    if(q.front()==i)
+                        ans = true;
+                    q.push(q.front()),q.pop();
+                }
+                if(!ans)
+                    q.pop(),q.push(i),fifo++;
+            }
+        }
+        deque<int> q2;
+        int lru = 0;
+        for(auto i:pages)
+        {
+            if(q2.size()<p)
+            {
+                bool ans = false;
+                int k;
+                int h = q2.size();
+                for(int j = 0;j<h;j++)
+                {
+                    if(q2.front()==i)
+                        ans = true,k = i, q2.pop_front();
                     else
-                    {
-                        int hsh;
-                        for(hsh=1;hsh<p;hsh++)
-                        {
-                            lru[hsh]=lru[(hsh+1)%p];
-                        }
-
-                    }
-
-
-                    kl++;
-                    lru[kl-1]=temp;
-                    lf=1;
+                        q2.push_back(q2.front()),q2.pop_front();
                 }
+                if(!ans)
+                    q2.push_front(i);
+                else
+                    q2.push_front(k);
+                continue;
             }
-            if(ff!=1)
+            else
             {
-                kf=kf%p;
-                fifo[kf++]=page;
-                cf++;
-            }
-            if(lf!=1)
-            {
-                kl=kl%p;
-                lru[kl++]=page;
-                cl++;
+                bool ans = false;
+                int k;
+                int h = q2.size();
+                for(int j = 0;j<h;j++)
+                {
+                    if(q2.front()==i)
+                        ans = true,k = i, q2.pop_front();
+                    else
+                        q2.push_back(q2.front()),q2.pop_front();
+                }
+                if(!ans)
+                    q2.push_front(i),lru++,q2.pop_back();
+                else
+                    q2.push_front(k);
             }
         }
-        if(cf>cl)
-        {
-            printf("yes ");
-        }
+        if(lru<fifo)
+            cout<<"yes ";
         else
-            printf("no ");
-        printf("%d %d\n",cf,cl);
+            cout<<"no ";
+        cout<<fifo<<" "<<lru<<endl;
+
 
     }
-
     return 0;
 }
