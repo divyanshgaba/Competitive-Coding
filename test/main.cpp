@@ -1,56 +1,86 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
+#define F(i,p,n) for(LL i=p; i<n; i++)
+#define loop(i, n) for(LL i=0; i<n; i++)
+#define fast   ios_base::sync_with_stdio(0); cin.tie(0)
+#define dd double
+#define mem(a, v) memset(a, v, sizeof(a))
+typedef long long int LL;
+typedef unsigned long long int ULL;
 using namespace std;
-const int N = 1e5;
-string s1,s2;
-unordered_map<char,int> m2,cumilative[N];
-bool possible(unordered_map<char,int> a,unordered_map<char,int> b)
-{
-    for(char i = 'A';i<='Z';i++)
-    {
-        if(b[i] - a[i] < m2[i])
-            return false;
-    }
-    return true;
-}
-
-int answer(int i)
-{
-    int low = 1,high = s1.length();
-    int ans = 2*s1.length();
-    while(low<=high)
-    {
-        int mid = (low+high)/2;
-        if(possible(cumilative[i-1],cumilative[mid]))
-        {
-            ans = mid-i+1;
-            high = mid-1;
-        }
-        else
-        {
-            low = mid+1;
-        }
-    }
-    return ans;
-}
-
 int main()
 {
-    cin>>s1>>s2;
-    for(int i = 0;i<s2.length();i++)
-        m2[s2[i]]++;
-    for(int i = 1;i<=s1.length();i++)
-    {
-            cumilative[i].insert(cumilative[i-1].begin(),cumilative[i-1].end());
-            cumilative[i][s1[i-1]]++;
-    }
-    int ans = 2*s1.length();
-    for(int i = 1;i<=s1.length();i++)
-    {
-        //cout<<answer(i)<<" "<<i<<endl;
-        ans = min(ans,answer(i));
-    }
-    if(ans<2*s1.length())
+	ULL t; cin>>t;
+	while(t--)
+	{
+        string s; cin>>s;
+        LL x,y; cin>>x>>y;
+        LL n=s.length();
+        LL a=0,b=0;
+        string ans;
+        F(i,0,n)
+        {
+            if(s[i]=='a') a++;
+            else b++;
+        }
+        while(true)
+        {
+            if((a==0)&&(b==0)) break;
+            if(a>b)
+            {
+                if(b==0)
+                {
+                    LL m=ans.length();
+                    if(ans[m-1]=='a')
+                    {
+                        ans.append("*");
+                    }
+                    F(i,0,min(x,a)) ans.append("a");
+                    if(x<a) ans.append("");
+                    a-=min(x,a);
+                    if(a==0) break;
+                }
+                else
+                {
+                    LL m=ans.length();
+                    if(ans[m-1]=='a')
+                    {
+                        ans.append("b");
+                        b-=1;
+                    }
+                    F(i,0,min(x,a)) ans.append("a");
+                    a-=min(x,a);
+                }
+            }
+            if(a==b)
+            {
+                LL m=ans.length();
+                if(ans[m-1]=='a') F(i,0,a) ans.append("ba");
+                else F(i,0,a) ans.append("ab");
+                break;
+            }
+            if(a<b)
+            {
+                if(a==0)
+                {
+                    LL m=ans.length();
+                    if(ans[m-1]=='b')
+                    {ans.append("*"); }
+                    F(i,0,min(b,y)) ans.append("b");
+                    if(y<b) ans.append("");
+                    b-=min(b,y);
+                    if(b==0) break;
+                }
+                else
+                {
+                    LL m=ans.length();
+                    if(ans[m-1]=='b')
+                    {ans.append("a"); a-=1;}
+                    F(i,0,min(b,y)) ans.append("b");
+                    b-=min(b,y);
+                }
+            }
+        }
         cout<<ans<<endl;
-    else
-        cout<<-1<<endl;
+	}
+	return 0;
 }

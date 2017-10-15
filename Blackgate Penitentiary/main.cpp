@@ -17,32 +17,31 @@ typedef long long ll;
 typedef vector<int> vi;
 typedef pair<int,int> pi;
 
-bool isArmstrong(int i)
-{
-    int t = i;
-    int ans = 0;
-    while(i)
-    {
-        ans += pow(i%10,3);
-        i/=10;
-    }
-    if(t==ans)
-        return true;
-    return false;
-}
-
 int main()
 {
 	fast;
-    int n1,n2;
-    cin>>n1>>n2;
-    for(int i = n1;i<=n2;i++)
+	int n;
+	cin>>n;
+	vector<string> v[251];
+	for(int i = 0;i<n;i++)
     {
-        if(isArmstrong(i))
-            cout<<i<<" ";
+        string s;
+        int h;
+        cin>>s>>h;
+        v[h].PB(s);
     }
-    cout<<endl;
-
+    int c = 1;
+    for(int i = 120;i<251;i++)
+    {
+        if(v[i].size()==0)
+            continue;
+        sort(v[i].begin(),v[i].end());
+        int st = c,en = c;
+        for(auto j:v[i])
+            cout<<j<<" ",en++;
+        cout<<st<<" "<<en-1<<endl;
+        c=en;
+    }
 	return 0;
 
 }

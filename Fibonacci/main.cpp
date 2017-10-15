@@ -8,41 +8,39 @@
 #define S second
 #define PB push_back
 #define MP make_pair
-#define REP(i,a,b) for (int i = a; i <= b; i++)
+#define REP(i,a,b) for (ll i = a; i <= b; i++)
 
 
 using namespace std;
 
 typedef long long ll;
-typedef vector<int> vi;
-typedef pair<int,int> pi;
+typedef vector<ll> vi;
+typedef pair<ll,ll> pi;
 
-bool isArmstrong(int i)
+vector<int> fib;
+
+void init()
 {
-    int t = i;
-    int ans = 0;
-    while(i)
+    fib.PB(0),fib.PB(1);
+    for(int i = 2;i<60;i++)
     {
-        ans += pow(i%10,3);
-        i/=10;
+        fib.PB((fib[i-1]+fib[i-2])%10);
     }
-    if(t==ans)
-        return true;
-    return false;
-}
 
+}
 int main()
 {
 	fast;
-    int n1,n2;
-    cin>>n1>>n2;
-    for(int i = n1;i<=n2;i++)
+	init();
+	ll test=1;
+	cin>>test;
+	while(test--)
     {
-        if(isArmstrong(i))
-            cout<<i<<" ";
+		ll n;
+		cin>>n;
+		n = (n+1)%60;
+		cout<<fib[n]<<endl;
     }
-    cout<<endl;
-
 	return 0;
 
 }
