@@ -1,86 +1,136 @@
-#include <bits/stdc++.h>
-#define F(i,p,n) for(LL i=p; i<n; i++)
-#define loop(i, n) for(LL i=0; i<n; i++)
-#define fast   ios_base::sync_with_stdio(0); cin.tie(0)
-#define dd double
-#define mem(a, v) memset(a, v, sizeof(a))
-typedef long long int LL;
-typedef unsigned long long int ULL;
+/************************************
+ *	AUTHOR: 		Divyansh Gaba	*
+ *	INSTITUTION: 	ASET, BIJWASAN	*
+ ************************************/
+#include<bits/stdc++.h>
+#define fast ios_base::sync_with_stdio(0); cin.tie(0);
+#define F first
+#define S second
+#define PB push_back
+#define MP make_pair
+#define REP(i,a,b) for (int i = a; i <= b; i++)
+
+
 using namespace std;
+
+typedef long long ll;
+typedef vector<int> vi;
+typedef pair<int,int> pi;
+const int N=1e4;
+const int M = 5e3;
+int f[M];
+int cnt;
+unordered_map<int,int> key;
+vector<pair<int,int> > edge;
+int m;
+int arr[N];
+int size[N];
+void init()
+{
+    for(int i = 0;i<cnt;i++)
+        arr[i]=i,size[i]=1;
+}
+int root(int n)
+{
+    while(arr[n]!=n)
+        arr[n]=arr[arr[n]],n=arr[n];
+    return n;
+}
+int special(int i)
+{
+    if(root(edge[i].first)==root(edge[i].second))
+        return 1;
+    return 0;
+}
+void connect(int a,int b)
+{
+    int r_a =root(a),r_b=root(b);
+    if(r_a==r_b)
+        return;
+    if(size[r_a]<size[r_b])
+        arr[r_a]=arr[r_b],size[r_b]+=size[r_a];
+    else
+        arr[r_b]=arr[r_a],size[r_a]+=size[r_b];
+}
+int ans(int st,int en,int k)
+{
+    init();
+    for(int i = st;i<=en;i++)
+    {
+        if(i!=k)
+            connect(edge[i].first,edge[i].second);
+    }
+    return special(k);
+}
+int bin(int low,int st,int k)
+{
+    int  high = m;
+    int answer = m;
+    while(low<high)
+    {
+        int mid = (low+high)/2;
+        if(ans(st,mid,k))
+            high=mid,answer = mid;
+        else
+            low=mid+1;
+    }
+    return answer;
+}
 int main()
 {
-	ULL t; cin>>t;
-	while(t--)
-	{
-        string s; cin>>s;
-        LL x,y; cin>>x>>y;
-        LL n=s.length();
-        LL a=0,b=0;
-        string ans;
-        F(i,0,n)
+    fast;
+    int test=1;
+    cin>>test;
+    while(test--)
+    {
+        cin>>m;
+        cnt=0;
+        key.clear();
+        edge.clear();
+        for(int i = 0;i<m;i++)
         {
-            if(s[i]=='a') a++;
-            else b++;
+            pair<int,int> a;
+            cin>>a.first>>a.second;
+            if(key.count(a.first)==0)
+                key[a.first]=cnt++;
+            if(key.count(a.second)==0)
+                key[a.second]=cnt++;
+            edge.push_back({key[a.first],key[a.second]});
         }
-        while(true)
+        for(int i = 0;i<m;i++)
         {
-            if((a==0)&&(b==0)) break;
-            if(a>b)
+            f[i]=0;
+            for(int st = 0;st<=i;st++)
             {
-                if(b==0)
+                init();
+                for(int k = st;k<i;k++)
+                    connect(edge[k].first,edge[k].second);
+                int en=i;
+                int flag = 1;
+                for(en = i;en<m;en++)
                 {
-                    LL m=ans.length();
-                    if(ans[m-1]=='a')
+                    if(en!=i)
+                        connect(edge[en].first,edge[en].second);
+                    if(special(i))
                     {
-                        ans.append("*");
+                        f[i]+=(m-en);
+                        //cout<<i<<" "<<st<<" "<<en<<endl;
+                        flag = 0;
+                        break;
                     }
-                    F(i,0,min(x,a)) ans.append("a");
-                    if(x<a) ans.append("");
-                    a-=min(x,a);
-                    if(a==0) break;
+
                 }
-                else
+                if(flag==1&&special(i))
                 {
-                    LL m=ans.length();
-                    if(ans[m-1]=='a')
-                    {
-                        ans.append("b");
-                        b-=1;
-                    }
-                    F(i,0,min(x,a)) ans.append("a");
-                    a-=min(x,a);
-                }
-            }
-            if(a==b)
-            {
-                LL m=ans.length();
-                if(ans[m-1]=='a') F(i,0,a) ans.append("ba");
-                else F(i,0,a) ans.append("ab");
-                break;
-            }
-            if(a<b)
-            {
-                if(a==0)
-                {
-                    LL m=ans.length();
-                    if(ans[m-1]=='b')
-                    {ans.append("*"); }
-                    F(i,0,min(b,y)) ans.append("b");
-                    if(y<b) ans.append("");
-                    b-=min(b,y);
-                    if(b==0) break;
-                }
-                else
-                {
-                    LL m=ans.length();
-                    if(ans[m-1]=='b')
-                    {ans.append("a"); a-=1;}
-                    F(i,0,min(b,y)) ans.append("b");
-                    b-=min(b,y);
+                    f[i]+=(m-en);
+                    //cout<<i<<" "<<st<<" "<<en<<endl;
+                    break;
                 }
             }
         }
-        cout<<ans<<endl;
-	}
-	return 0;
+        for(int i = 0;i<m;i++)
+            cout<<f[i]<<" ";
+        cout<<endl;
+    }
+    return 0;
 }
