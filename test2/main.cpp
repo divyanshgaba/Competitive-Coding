@@ -4,12 +4,11 @@ using namespace std;
 
 int main()
 {
-    ofstream fout ("input.csv");
-    int n = 10;
+    ofstream fout ("input.txt");
+    int n = 50;
     for(int i = 0;i<n;i++)
     {
-        fout<<rand()%5<<endl;
+        fout<<rand()%100<<" "<<rand()%100<<" "<<rand()%100<<" "<<rand()%1000<<" "<<rand()%1000<<" "<<rand()%1000<<endl;
     }
-
     return 0;
 }
