@@ -21,8 +21,15 @@ ll val(ll x,ll y,ll z)
 {
     if(x<0||y<0||z<0)
         return 1e16;
-    ll numb = x + min(y,(z+y-x)/2);
-    ll ans =  min(b*(numb) + (x+y+z-2*numb)*a,(x+y+z)*a);
+    ll ans = 1e16;
+    if(z<=x+y)
+    {
+        if((z+x+y)&1)
+            ans = min(ans, ((x+y+z-1)/2)*b+a);
+        else
+            ans = min(ans,((x+y+z)/2)*b);
+    }
+    ans = min(ans,(x+y)*b + (z-x-y)*a);
     return ans;
 }
 
@@ -33,24 +40,15 @@ int main()
 	while(t--)
     {
 		cin>>x>>y>>z>>a>>b>>c;
-		if(x>y)
-            swap(x,y);
-        if(x>z)
-            swap(x,z);
-        if(y>z)
-            swap(y,z);
+		priority_queue<ll> q;
+		q.push(x),q.push(y),q.push(z);
+		z = q.top(),q.pop();
+		y=q.top(),q.pop();
+		x=q.top(),q.pop();
 		ll ans = val(x,y,z);
-		ll n = min(x,min(y,z));
-		for(int i = 0;i<100;i++)
-        {
-            ll o = val(x-i,y-i,z-i)+i*c;
-            ll t = val(x-n+i,y-n+i,z-n+i)+(n-i)*c;
-            ll j = 1e16;
-            if((n/2-i)>=0)
-                j = val(x-n/2+i,y-n/2+i,z-n/2+i)+(n/2-i)*c;
-            ll k = val(x-n/2-i,y-n/2-i,z-n/2-i)+(n/2+i)*c;
-            ans = min(ans,min(o,min(t,min(j,k))));
-        }
+		ll r[] = {x,x+y-z-1,x+y-z,x-1,x};
+		for(int i = 0;i<5;i++)
+            ans = min(ans,val(x-r[i],y-r[i],z-r[i])+r[i]*c);
         cout<<ans<<endl;
 
     }
