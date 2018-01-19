@@ -31,7 +31,9 @@
 *.out
 *.app
 
-
+*.in
+*.out
+*.txt
 *.cbp
 *.depend
 *.layout

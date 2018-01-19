@@ -17,17 +17,17 @@ const ll mod = 1e9 +7;
 ll sum[100001];
 void precomp(int k)
 {
-    for(int i =1;i<=100000;++i)
+    for(int i =0;i<=100000;++i)
     {
         if(i<k)
             n[i]=1;
         else
             n[i] = n[i-1] + n[i-k];
-        if(n[i]>mod)
+        if(n[i]>=mod)
             n[i]%=mod;
     }
-    sum[1]=n[1];
-    for(int i =2;i<=100000;++i)
+    sum[0]=n[0];
+    for(int i =1;i<=100000;++i)
         sum[i]=(sum[i-1]+n[i])%mod;
 }
 
@@ -41,9 +41,7 @@ int main()
     {
         int a,b;
         cin>>a>>b;
-        int ans = sum[b]-sum[a-1];
-        if(ans<0)
-            ans+=mod;
+        ll ans = (sum[b]-sum[a-1]+mod)%mod;
         cout<<ans<<endl;
     }
 	return 0;
