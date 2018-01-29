@@ -10,35 +10,34 @@
 #define MP make_pair
 #define REP(i,a,b) for (int i = a; i <= b; i++)
 
+
 using namespace std;
+
 typedef long long ll;
 typedef vector<int> vi;
 typedef pair<int,int> pi;
 
-const ll maxval =1e9;
+bool cmp(pair<int,string> a,pair<int,string> b)
+{
+    return a.F>b.F;
+}
 
 int main()
 {
-    //ifstream cin("input/input04.in"); //ofstream cout("output/output04.out");
-	int test=1;
-	cin>>test;
-	assert(1<=test && test<=100000);
-	while(test--)
+	fast;
+	int n;
+	cin>>n;
+	vector<pair<int,string>> v;
+	for(int i = 0;i<n;i++)
     {
-		ll a,b;
-		cin>>a>>b;
-		assert(1<=a && a<=maxval);
-		assert(1<=b && b<=maxval);
-		if(a>=b)
-        {
-            cout<<"-1"<<endl;
-        }
-        else
-        {
-            ll ans = ceil(sqrt(b*b - a*a));
-            assert(ans>0);
-            cout<<ans<<endl;
-        }
+        string a;
+        cin>>a;
+        int b,c;
+        cin>>b>>c;
+        v.PB(MP(c-b,a));
     }
+    stable_sort(v.begin(),v.end(),cmp);
+    cout<<v[0].S<<" "<<v[0].F<<endl;
 	return 0;
+
 }

@@ -10,35 +10,44 @@
 #define MP make_pair
 #define REP(i,a,b) for (int i = a; i <= b; i++)
 
+
 using namespace std;
+
 typedef long long ll;
 typedef vector<int> vi;
 typedef pair<int,int> pi;
+struct node
+{
+    ll a,b,c;
+    ll ans;
+};
+ll k,n;
+const int N = 3e5+5;
+node g[N];
 
-const ll maxval =1e9;
+ll f(ll a,ll b,ll c,ll t)
+{
+    int ans =  (a+t)%k + (b+t)%k  + (c+t)%k ;
+    cout<<a<<" "<<b<<" "<<c<<" "<<t<<" "<<ans<<endl;
+    return ans;
+}
 
 int main()
 {
-    //ifstream cin("input/input04.in"); //ofstream cout("output/output04.out");
-	int test=1;
-	cin>>test;
-	assert(1<=test && test<=100000);
-	while(test--)
+	fast;
+	cin>>n>>k;
+	ll answer = 0;
+	for(int i = 0;i<n;i++)
     {
-		ll a,b;
-		cin>>a>>b;
-		assert(1<=a && a<=maxval);
-		assert(1<=b && b<=maxval);
-		if(a>=b)
-        {
-            cout<<"-1"<<endl;
-        }
-        else
-        {
-            ll ans = ceil(sqrt(b*b - a*a));
-            assert(ans>0);
-            cout<<ans<<endl;
-        }
+        cin>>g[i].a>>g[i].b>>g[i].c;
     }
+    for(int i = 0;i<k;i++)
+    {
+        for(int j = 0;j<n;j++)
+            f(g[j].a,g[j].b,g[j].c,i);
+        cout<<endl;
+    }
+
 	return 0;
+
 }
