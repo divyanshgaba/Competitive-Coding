@@ -48,11 +48,8 @@ int main()
         }
         else
         {   count = d[p]+d[q];
-            if(p<1414)
-            {
-                if(pq<MAX)
-                    count-=d[pq];
-            }
+            long long lcm = (p/__gcd(p,q)) * q;
+            if(lcm < 200000) count-=d[lcm];
         }
         cout<<count<<endl;
 
